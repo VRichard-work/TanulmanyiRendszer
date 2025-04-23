@@ -4,31 +4,65 @@ if(session_status() == PHP_SESSION_NONE) {
   session_start();
   header("login.php");
 }
-// Connect to the database
+
+
+// Csatlakozás
 $conn = oci_connect("C##CHCGUK", "C##CHCGUK", "localhost:1521/orania2.inf.u-szeged.hu");
 if (!$conn) {
   $e = oci_error();
   echo "Connection failed: " . $e['message'];
   exit;
 }
-$test = oci_parse($conn, "SELECT * FROM ADMIN");
+// SQL parancs előkészítése
+// A felhasználó típusa alapján állítjuk be a lekérdezést
+if($_SESSION['userType'] == 'admin') {
+  $stmt = oci_parse($conn, "SELECT * FROM ADMIN");
+} elseif ($_SESSION['userType'] == 'prof') {
+  $stmt = oci_parse($conn, "SELECT * FROM OKTATOK");
+} elseif ($_SESSION['userType'] == 'stud') {
+  $stmt = oci_parse($conn, "SELECT * FROM HALLGATOK");
+} else {
+  echo "Invalid user type.";
+  exit;
+}
 
-// Check if the connection was successful
-if (!$test) {
+// SQL parancs végrehajtása
+if (!$stmt) {
   $e = oci_error($conn);
   echo "SQL error: " . $e['message'];
   exit;
 }
 
-oci_execute($test);
-while ($row = oci_fetch_array($test, OCI_ASSOC + OCI_RETURN_NULLS)) {
-  echo "<br>";
-  echo "<br>";
-  echo $row['ADMINID'];
-  echo "<br>";
-  echo $row['AJELSZO'];
-  echo "<br>";
-  
+oci_execute($stmt);
+if($_SESSION['userType'] == 'admin') {
+  while ($row = oci_fetch_array($stmt)) {
+    echo "<br>";
+    echo "<br>";
+    echo $row['ADMINID'];
+    echo "<br>";
+    echo $row['AJELSZO'];
+    echo "<br>";
+  }
+}
+else if($_SESSION['userType'] == 'prof') {
+  while ($row = oci_fetch_array($stmt)) {
+    echo "<br>";
+    echo "<br>";
+    echo $row['OKTATOID'];
+    echo "<br>";
+    echo $row['OJELSZO'];
+    echo "<br>";
+  }
+}
+else if($_SESSION['userType'] == 'stud') {
+  while ($row = oci_fetch_array($stmt)) {
+    echo "<br>";
+    echo "<br>";
+    echo $row['HALLGATOID'];
+    echo "<br>";
+    echo $row['HJELSZO'];
+    echo "<br>";
+  }
 }
 ?>
 
@@ -48,5 +82,8 @@ while ($row = oci_fetch_array($test, OCI_ASSOC + OCI_RETURN_NULLS)) {
       </ul>
 
     <button onclick="location.href='login.php'">Bejelentkezés</button>
+    <form action="logout.php" method="POST">
+        <input type="submit" value="Kilépés" />
+      </form>
   </body>
 </html>
