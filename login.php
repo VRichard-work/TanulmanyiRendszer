@@ -1,10 +1,27 @@
 <?php
   if(session_status() == PHP_SESSION_NONE) {
     session_start();
+    $_SESSION['loggedin'] = false;
+  }
+  if($_SESSION['loggedin'] == true) {
+    header("Location: index.php");
+    exit;
+  }
+  if(isset($_POST['userType']) && isset($_POST['username']) && isset($_POST['password'])) {
+    $userType = $_POST['userType'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $_SESSION['loggedin'] = true;
+    header("Location: index.php");
+  }
+  // Connect to the database
+  $conn = oci_connect("C##FK1C6Z", "C##FK1C6Z", "localhost:1521/orania2.inf.u-szeged.hu");
+  if (!$conn) {
+    $e = oci_error();
+    echo "Connection failed: " . $e['message'];
+    exit;
   }
   
-
-
 ?>
 
 
