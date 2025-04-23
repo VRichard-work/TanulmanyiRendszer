@@ -1,12 +1,10 @@
 <?php
-  if(session_status() == PHP_SESSION_NONE) {
-    session_start();
-    $_SESSION['loggedin'] = false;
-  }
-  if($_SESSION['loggedin'] == true) {
-    header("Location: index.php");
-    exit;
-  }
+session_start();
+
+if(isset($_SESSION['userType'])) {
+  header("Location: index.php");
+}
+
   // Csatlakozás
   $conn = oci_connect("C##CHCGUK", "C##CHCGUK", "localhost:1521/orania2.inf.u-szeged.hu");
   if (!$conn) {
@@ -43,7 +41,6 @@
     
     // Beloginoltatás
     if (oci_fetch($stmt)) {
-      $_SESSION['loggedin'] = true;
       $_SESSION['userType'] = $userType;
       $_SESSION['username'] = $username;
       header("Location: index.php");

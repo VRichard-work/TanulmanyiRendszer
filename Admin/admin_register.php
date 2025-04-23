@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['userType'])) {
+  header("Location: ../login.php");
+}
+if($_SESSION['userType'] != 'admin') {
+  header("Location: ../index.php");
+  exit;
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>

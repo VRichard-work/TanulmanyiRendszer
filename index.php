@@ -1,8 +1,8 @@
 <?php
+session_start();
 
-if(session_status() == PHP_SESSION_NONE) {
-  session_start();
-  header("login.php");
+if(!isset($_SESSION['userType'])) {
+  header("Location: login.php");
 }
 
 
@@ -77,7 +77,7 @@ else if($_SESSION['userType'] == 'stud') {
     <nav style="display:inline-box;">
       <ul>
         <li><a href="index.php">Főoldal</a></li>
-        <li><a href="admin_register.php">Admin regisztráció</a></li>
+        <li><a href="Admin/admin_register.php">Admin regisztráció</a></li>
         <li><a href="login.php">Bejelentkezés</a></li>
       </ul>
 
