@@ -1,9 +1,9 @@
 <?php
-/*include '../functions.php';
+include '../functions.php';
 Session();
 Prof();
 $conn = Connect();
-*/
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,8 +65,8 @@ $conn = Connect();
     <div class="container">
         <div class="panel">
             <a href="kurzusview.php">Kurzusok, órák</a>
-            <a href="spect.php">Vizsgák hirdetése</a>
-            <a href="vizsga.php">Jegyek beírása</a>
+            <a href="spect.php">Vizsgák hirdetése(Nem mukodik)</a>
+            <a href="vizsgahir.php">Jegyek beírása</a>
         </div>
     </div>
 </body>

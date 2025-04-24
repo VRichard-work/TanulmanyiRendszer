@@ -40,7 +40,16 @@ if(isset($_SESSION['userType'])) {
     if (oci_fetch($stmt)) {
       $_SESSION['userType'] = $userType;
       $_SESSION['username'] = $username;
-      header("Location: index.php");
+
+      if($userType == 'admin') {
+        header("Location: Admin/apanel.php");
+      } elseif ($userType == 'prof') {
+        header("Location: Oktato/oktpanel.php");
+      } elseif ($userType == 'stud') {
+        header("Location: Stud/panel.php");
+      } else {
+        echo "Invalid user type.";
+      }
       exit;
     } else {
       echo "Invalid username or password.";

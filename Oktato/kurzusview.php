@@ -3,10 +3,6 @@ include '../functions.php';
 Session();
 Prof();
 $conn = Connect();
-$currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
-//félév választása? - nincs hozzá oszlopunk a tanároknak!!!
-//inner vagy natural join? I forgot sql :(
-
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -89,29 +85,34 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
         <h1>A kurzusok</h1>
 
         <form action="kurzusview.php" method="POST">
-            <label for="kurzusnev">Fálasszon félévet</label>
+            <label for="kurzusnev">Válasszon félévet</label>
             <select id="kurzusnev" name="kurzusnev" required>
                 <?php
                 //kurzus választása az órák listázásához
-                if($sql = "SELECT KURZUSNEV FROM KURZUSOK INNER JOIN FELELOS WHERE OKTATOID = $currentuser"){
+                    $sql = "SELECT KURZUSOK.KNEV FROM KURZUSOK INNER JOIN FELELOS ON KURZUSOK.KURZUSID = FELELOS.KURZUSID WHERE FELELOS.OKTATOID = :username";
                     $result = oci_parse($conn, $sql);
+                    oci_bind_by_name($result, ':username',$_SESSION['username']);
+                    oci_execute($result);
                     $rowcount = oci_num_rows($result);
                     if($rowcount > 0){
-                        while($row = oci_fetch_assoc($result)){
-                            echo '<option value="'.$result.'">'.$result.'</option>';
-                        }
-                    } else{
-                        echo '<option value="0">Nem lételiz Kurzus</option>';
+                        while($row = oci_fetch_array($result)){?>
+                            <option value="<?$row["KNEV"]?>"><?$row['KNEV']?></option>
+                        <?php }
+                    } else{ ?>
+                        <option value="0">Nem létezik Kurzus</option>
+                    <?php
                     }
-                }
+                    oci_free_statement($result);
                 ?>
             </select>
         </form>
 
         <?php
         //kurzusok listázása
-            if($sql=("SELECT * FROM KURZUSOK INNER JOIN FELELOS WHERE OKTATOID = $currentuser")){
+                $sql="SELECT KURZUSOK.KNEV FROM KURZUSOK INNER JOIN FELELOS ON KURZUSOK.KURZUSID = FELELOS.KURZUSID WHERE FELELOS.OKTATOID = :username";
                 $result = oci_parse($conn, $sql);
+                oci_bind_by_name($result, ':username', $_SESSION['username']);
+                oci_execute($result);
                 $rowcount = oci_num_rows($result);
                 if($rowcount > 0){
                     echo '<table border="1">';
@@ -137,15 +138,17 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
                     echo '<p>Még nincs megjeleníthető adat.</p>';
                 }
 
-            }
             ?>
             <br><br><br>
             <?php
             //órák listázása kurzusok szerint
             if(isset($_POST['kurzusnev'])){
                 $kurzusnev = $_POST['kurzusnev'];
-                if($sql = 'SELECT * FROM ORAK INNER JOIN TARTJA WHERE OKTATOID = $currentuser AND ORAK.KURZUSNEV = $kurzusnev'){
+                if($sql = 'SELECT * FROM ORAK INNER JOIN TARTJA WHERE OKTATOID = :username AND ORAK.KURZUSNEV = :kurzusnev'){
                     $result = oci_parse($conn, $sql);
+                    oci_bind_by_name($result, ':username', $_SESSION['username']);
+                    oci_bind_by_name($result, ':kurzusnev', $kurzusnev);
+                    oci_execute($result);
                     $rowcount = oci_num_rows($result);
                     if($rowcount > 0){
                         echo '<table border="1">';
