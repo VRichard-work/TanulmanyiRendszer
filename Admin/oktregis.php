@@ -3,6 +3,28 @@ include '../functions.php';
 Session();
 Admin();
 $conn = Connect();
+
+if(isset($_POST['name']) && isset($_POST['password']) && isset($_POST['id'])){
+    $id=$_POST['id'];
+    $nev=$_POST['name'];
+    $password=$_POST['password'];
+    //hogyan ellenőrizzük h egyedi e az id?
+
+
+    $sql = "INSERT INTO OKTATOK (OKTATOID,ONEV,OJELSZO) VALUES (:id, :name, :password)";
+    
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    oci_bind_by_name($stmt, ':name', $username);
+    oci_bind_by_name($stmt, ':password', $password);
+    if(oci_execute($stmt)) {
+        echo "Sikeres regisztráció!";
+        header("Location: apanel.php");
+    } else {
+        echo "Hiba történt a regisztráció során.";
+    }
+    oci_free_statement($stmt);
+}
 ?>
 
 <!DOCTYPE html>
@@ -86,11 +108,14 @@ $conn = Connect();
 
         <h1>Oktató Regisztráció</h1>
         <form action="/submit_registration" method="POST">
+            <label for="id">Oktató kódja</label>
+            <input type="text" id="id" name="id" placeholder="Oktató ID" required>
+
             <label for="name">Teljes név:</label>
-            <input type="text" id="name" name="name" placeholder="Add meg a neved" required>
+            <input type="text" id="name" name="name" placeholder="Név" required>
 
             <label for="password">Jelszó:</label>
-            <input type="password" id="password" name="password" placeholder="Add meg a jelszavad" required>
+            <input type="password" id="password" name="password" placeholder="Jelszó" required>
 
             <button type="submit">Regisztráció</button>
             <a href="apanel.html" class="back-link">Vissza a főpanelre</a>

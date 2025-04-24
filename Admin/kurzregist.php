@@ -4,7 +4,30 @@ Session();
 Admin();
 $conn = Connect();
 
+if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kovtipus']) && isset($_POST['kurtipus']) && isset($_POST['kod'])){
+    $id=$_POST['id'];
+    $name=$_POST['name'];
+    $kovtipus=$_POST['kovtipus'];
+    $kurtipus=$_POST['kurtipus'];
+    $kod=$_POST['kod'];
+    //egyedi id ellenőrzése?
 
+    $sql = "INSERT INTO KURZUSOK (KURZUSID,KNEV,KOVETELMENYTIPUS,KURZUSTIPUS,KURZUSKOD) VALUES (:id, :name, :kovtipus, :kutipus, :kod)";
+    
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    oci_bind_by_name($stmt, ':name', $username);
+    oci_bind_by_name($stmt, ':kovtipus', $kovtipus);
+    oci_bind_by_name($stmt, ':kurtipus', $kurtipus);
+    oci_bind_by_name($stmt, ':kod', $kod);
+    if(oci_execute($stmt)) {
+        echo "Sikeres regisztráció!";
+        header("Location: apanel.php");
+    } else {
+        echo "Hiba történt a regisztráció során.";
+    }
+    oci_free_statement($stmt);
+}
 
 ?>
 
@@ -90,14 +113,17 @@ $conn = Connect();
 
         <h1>Kurzus felvitele</h1>
         <form action="/submit_registration" method="POST">
+            <label for="id">Kurzus azonosítója:</label>
+            <input type="text" name="id" id="id" placeholder="Kurzus ID" required>
+
             <label for="name">Kurzus név:</label>
             <input type="text" id="name" name="name" placeholder="Add meg a kurzus nevét" required>
-
 
             <label for="department">Követelménytipus</label>
             <select id="kovtipus" name="kovtipus" required>
                 <option value="">Nincs</option>
-                <option value="">Előtanulmányok</option>
+                <option value="">Kollokvium</option>
+                <option value="">Gyakorlati vizsga</option>
             </select>
 
             <label for="department">Kurzus tipusa</label>
