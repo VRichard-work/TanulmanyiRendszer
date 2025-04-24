@@ -112,7 +112,7 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kovtipus']) && 
 
 
         <h1>Kurzus felvitele</h1>
-        <form action="/submit_registration" method="POST">
+        <form action="kurzregist.php" method="POST">
             <label for="id">Kurzus azonosítója:</label>
             <input type="text" name="id" id="id" placeholder="Kurzus ID" required>
 

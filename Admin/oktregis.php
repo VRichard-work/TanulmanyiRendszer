@@ -107,7 +107,7 @@ if(isset($_POST['name']) && isset($_POST['password']) && isset($_POST['id'])){
     <div class="container">
 
         <h1>Oktató Regisztráció</h1>
-        <form action="/submit_registration" method="POST">
+        <form action="oktregis.php" method="POST">
             <label for="id">Oktató kódja</label>
             <input type="text" id="id" name="id" placeholder="Oktató ID" required>
 

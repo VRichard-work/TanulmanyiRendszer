@@ -170,6 +170,7 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
             }
 
         ?>
+        <a href="oktpanel.php" class="back-link">Vissza a főpanelre</a>
     </div>
 </body>
 </html>

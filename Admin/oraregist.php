@@ -16,7 +16,7 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && is
     
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
-    oci_bind_by_name($stmt, ':name', $username);
+    oci_bind_by_name($stmt, ':name', $name);
     oci_bind_by_name($stmt, ':kezdet', $kovtipus);
     oci_bind_by_name($stmt, ':veg', $kurtipus);
     oci_bind_by_name($stmt, ':kod', $kod);
@@ -112,20 +112,20 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && is
 
 
         <h1>Óra felvitele</h1>
-        <form action="/submit_registration" method="POST">
+        <form action="oraregist.php" method="POST">
             <label for="id">Óra azonosítója:</label>
             <input type="text" name="id" id="id" placeholder="Óra ID" required>
 
             <label for="name">Óra név:</label>
             <input type="text" id="name" name="name" placeholder="Add meg az óra nevét" required>
 
-            <label for="kezdet">Követelménytipus:</label>
+            <label for="kezdet">Óra kezdete:</label>
             <input type="time" id="kezdet" name="kezdet" required>
 
-            <label for="veg">Kurzus tipusa</label>
+            <label for="veg">Óra vége:</label>
             <input type="time" id="veg" name="veg" required>
 
-            <label for="name">Kurzushoz tartozik(kurzus kód):</label>
+            <label for="kod">Kurzushoz tartozik(kurzus kód):</label>
             <select name="kod" id="kod">
                 <?php
                 //kurzusid választása az órákhoz
@@ -143,7 +143,6 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && is
                 ?>
                 <option value=""></option>
             </select>
-            <input type="text" id="kod" name="kod" placeholder="Add meg a kurzus kodját" required>
 
             <button type="submit">Regisztráció</button>
             <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
