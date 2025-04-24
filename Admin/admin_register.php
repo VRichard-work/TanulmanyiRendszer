@@ -3,6 +3,52 @@ include '../functions.php';
 Session();
 Admin();
 $conn = Connect();
+if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['felhsz'])) {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $felhsz = $_POST['felhsz'];
+  $id = $_POST['id'];
+  $szulet = $_POST['szulet'];
+  // id ellenőrzése
+  // SQL parancs előkészítése
+  if($felhsz == 'oktato') {
+      $sql = "SELECT * FROM OKTATOK WHERE OKTATOID = :id";
+  } elseif ($felhsz == 'hallg') {
+      $sql = "SELECT * FROM HALLGATOK WHERE HALLGATOID = :id";
+  } else {
+      echo "Invalid user type.";
+      exit;
+  }
+
+  $stmt = oci_parse($conn, $sql);
+  oci_bind_by_name($stmt, ':id', $id);
+  oci_execute($stmt);
+  if (oci_fetch($stmt)) {
+      echo "A felhasználónév már létezik!";
+  } else {
+  // Felhasználó létrehozása
+    oci_free_statement($stmt);
+      if($felhsz == 'oktato') {
+        $sql = "INSERT INTO OKTATOK (OKTATOID,ONEV,OJELSZO) VALUES (:id, :username, :password)";
+    } elseif ($felhsz == 'hallg') {
+        $sql = "INSERT INTO HALLGATOK (HALLGATOID,HNEV,HJELSZO,SZULETES) VALUES (:id, :username, :password, TO_DATE(:szulet, 'YYYY-MM-DD'))";
+    }
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    oci_bind_by_name($stmt, ':username', $username);
+    oci_bind_by_name($stmt, ':password', $password);
+    if($felhsz == 'hallg') {
+        oci_bind_by_name($stmt, ':szulet', $szulet);
+    }
+
+    if(oci_execute($stmt)) {
+        echo "Sikeres regisztráció!";
+    } else {
+        echo "Hiba történt a regisztráció során.";
+    }
+    oci_free_statement($stmt);
+  }
+}
 
 
 
@@ -18,9 +64,15 @@ $conn = Connect();
 <body>
   <div class="form-container">
     <h2>Admin regisztráció</h2>
-    <form>
+    <form action="admin_register.php" method="POST">
       <label for="username">Név</label>
       <input type="text" id="username" name="username" required>
+      <br>
+      <label for="id">ID</label>
+      <input type="text" id="id" name="id" required>
+      <br>
+      <label for="szulet"></label>
+      <input type="date" id="szulet" name="szulet" required>
       <br>
       <label for="password">Jelszó</label>
       <input type="password" id="password" name="password" required>
