@@ -95,11 +95,13 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
                 //kurzus választása az órák listázásához
                 if($sql = "SELECT KURZUSNEV FROM KURZUSOK INNER JOIN FELELOS WHERE OKTATOID = $currentuser"){
                     $result = oci_parse($conn, $sql);
-                    $rowcount = oci_num_rows($sql);
+                    $rowcount = oci_num_rows($result);
                     if($rowcount > 0){
-                        while($row = oci_fetch_assoc($sql)){
-                            echo '<option value="'.$sql.'">'.$sql.'</option>';
+                        while($row = oci_fetch_assoc($result)){
+                            echo '<option value="'.$result.'">'.$result.'</option>';
                         }
+                    } else{
+                        echo '<option value="0">Nem lételiz Kurzus</option>';
                     }
                 }
                 ?>
@@ -110,7 +112,7 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
         //kurzusok listázása
             if($sql=("SELECT * FROM KURZUSOK INNER JOIN FELELOS WHERE OKTATOID = $currentuser")){
                 $result = oci_parse($conn, $sql);
-                $rowcount = oci_num_rows($sql);
+                $rowcount = oci_num_rows($result);
                 if($rowcount > 0){
                     echo '<table border="1">';
                         echo '<tr>
@@ -121,7 +123,7 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
                             <th>Kurzus Kód</th>
                             </tr>';
 
-                    while($row = oci_fetch_assoc($sql)){
+                    while($row = oci_fetch_assoc($result)){
                         echo '<tr>';
                             echo '<td>'.$sql['KURZUSID'].'</td>';
                             echo '<td>'.$sql['KNEV'].'</td>';
@@ -144,7 +146,7 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
                 $kurzusnev = $_POST['kurzusnev'];
                 if($sql = 'SELECT * FROM ORAK INNER JOIN TARTJA WHERE OKTATOID = $currentuser AND ORAK.KURZUSNEV = $kurzusnev'){
                     $result = oci_parse($conn, $sql);
-                    $rowcount = oci_num_rows($sql);
+                    $rowcount = oci_num_rows($result);
                     if($rowcount > 0){
                         echo '<table border="1">';
                             echo '<tr>
@@ -153,7 +155,7 @@ $currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
                                 <th>Terem</th>
                                 </tr>';
 
-                        while($row = oci_fetch_assoc($sql)){
+                        while($row = oci_fetch_assoc($result)){
                             echo '<tr>';
                                 echo '<td>'.$sql['ORAID'].'</td>';
                                 echo '<td>'.$sql['OKEZDET'].' - '.$sql['OVEGE'].'</td>';
