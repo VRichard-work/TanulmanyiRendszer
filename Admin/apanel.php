@@ -72,9 +72,9 @@ $conn = Connect();
 
 <div class="container">
     <div class="panel">
-        <a href="studreg.html">👨‍🎓 Diákok felvitele</a>
-        <a href="oktregis.html">👩‍🏫 Tanárok felvitele</a>
-        <a href="kurzregist.html">📚 Kurzusok felvitele</a>
+        <a href="studreg.php">👨‍🎓 Diákok felvitele</a>
+        <a href="oktregis.php">👩‍🏫 Tanárok felvitele</a>
+        <a href="kurzregist.php">📚 Kurzusok felvitele</a>
     </div>
 </div>
 

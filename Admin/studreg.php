@@ -3,6 +3,42 @@ include '../functions.php';
 Session();
 Admin();
 $conn = Connect();
+if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] != null && $_POST['password'] != null && $_POST['szulet'] != null) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $szulet = $_POST['szulet'];
+    $szakid = $_POST['szakid'] ?? null; // Ha nem küldtek szakid-t, akkor null-ra állítjuk
+    $id = 0;
+    while(true){
+        $sql = "SELECT * FROM HALLGATOK WHERE HALLGATOID = :id";
+        $id = rand(1, 999);
+        $stmt = oci_parse($conn, $sql);
+        oci_bind_by_name($stmt, ':id', $id);
+        oci_execute($stmt);
+        if (!oci_fetch($stmt)) {
+            break;
+        }
+    }
+    
+    oci_free_statement($stmt);
+    $sql = "INSERT INTO HALLGATOK (HALLGATOID,HNEV,HJELSZO,SZULETES, SZAKID) VALUES (:id, :username, :password, TO_DATE(:szulet, 'YYYY-MM-DD'), :szakid)";
+    
+    $stmt = oci_parse($conn, $sql);
+    oci_bind_by_name($stmt, ':id', $id);
+    oci_bind_by_name($stmt, ':username', $username);
+    oci_bind_by_name($stmt, ':password', $password);
+    oci_bind_by_name($stmt, ':szulet', $szulet);
+    oci_bind_by_name($stmt, ':szakid', $szakid);
+    if(oci_execute($stmt)) {
+        echo "Sikeres regisztráció!";
+        header("Location: apanel.php");
+    } else {
+        echo "Hiba történt a regisztráció során.";
+    }
+    oci_free_statement($stmt);
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -86,24 +122,24 @@ $conn = Connect();
 
 
         <h1>Diák Regisztráció</h1>
-        <form action="/submit_registration" method="POST">
-            <label for="name">Teljes név:</label>
-            <input type="text" id="name" name="name" placeholder="Add meg a neved" required>
+        <form action="studreg.php" method="POST">
+            <label for="username">Teljes név:</label>
+            <input type="text" id="name" name="username" placeholder="Add meg a neved" required>
 
             <label for="password">Jelszó:</label>
             <input type="password" id="password" name="password" placeholder="Add meg a jelszavad" required>
 
-            <label for="student_id">Születési dátum:</label>
-            <input type="date" id="date_id" name="date_id" required>
+            <label for="szulet">Születési dátum:</label>
+            <input type="date" id="date_id" name="szulet" required>
 
-            <label for="department">Szak:</label>
-            <select id="department" name="department" required>
-                <option value="">Válassz szakot</option>
-                <option value="">SZAKOK:SZNEV</option>
+            <label for="szakid">Szak:</label>
+            <select id="department" name="szakid" required>
+                <option value="0">Válassz szakot</option>
+                <option value="1">SZAKOK:SZNEV</option>
             </select>
-
-            <button type="submit">Regisztráció</button>
-            <a href="apanel.html" class="back-link">Vissza a főpanelre</a>
+                <input type="submit" value="Regisztráció" class="submit-button">
+            
+            <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
         </form>
     </div>
 </body>
