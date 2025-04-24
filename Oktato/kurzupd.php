@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurzus felvitele</title>
+    <title>Kurzus Órák Felvitele</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -104,4 +104,4 @@
         </form>
     </div>
 </body>
-</html>
+</html></div></main></header>
