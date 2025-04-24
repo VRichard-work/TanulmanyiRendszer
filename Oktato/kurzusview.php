@@ -3,6 +3,10 @@ include '../functions.php';
 Session();
 Prof();
 $conn = Connect();
+$currentuser = $_SESSION['OKTATOID']; //remélem jól írtam le
+//félév választása? - nincs hozzá oszlopunk a tanároknak!!!
+//inner vagy natural join? I forgot sql :(
+
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -82,32 +86,88 @@ $conn = Connect();
 </head>
 <body>
     <div class="container">
+        <h1>A kurzusok</h1>
 
-
-        <h1>Kurzus felvitele</h1>
-        <form action="/submit_registration" method="POST">
-            <label for="name">Kurzus név:</label>
-            <input type="text" id="name" name="name" placeholder="Add meg a kurzus nevét" required>
-
-
-            <label for="department">Követelménytipus</label>
-            <select id="kovtipus" name="kovtipus" required>
-                <option value="">Nincs</option>
-                <option value="">Előtanulmányok</option>
+        <form action="kurzusview.php" method="POST">
+            <label for="kurzusnev">Fálasszon félévet</label>
+            <select id="kurzusnev" name="kurzusnev" required>
+                <?php
+                //kurzus választása az órák listázásához
+                if($sql = "SELECT KURZUSNEV FROM KURZUSOK INNER JOIN FELELOS WHERE OKTATOID = $currentuser"){
+                    $result = oci_parse($conn, $sql);
+                    $rowcount = oci_num_rows($sql);
+                    if($rowcount > 0){
+                        while($row = oci_fetch_assoc($sql)){
+                            echo '<option value="'.$sql.'">'.$sql.'</option>';
+                        }
+                    }
+                }
+                ?>
             </select>
-
-            <label for="department">Kurzus tipusa</label>
-            <select id="kurtipus" name="kurtipus" required>
-                <option value="">Előadás</option>
-                <option value="">Gyakorlat</option>
-            </select>
-
-            <label for="name">Kurzus kodja:</label>
-            <input type="text" id="kod" name="kod" placeholder="Add meg a kurzus kodját" required>
-
-            <button type="submit">Regisztráció</button>
-            <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
         </form>
+
+        <?php
+        //kurzusok listázása
+            if($sql=("SELECT * FROM KURZUSOK INNER JOIN FELELOS WHERE OKTATOID = $currentuser")){
+                $result = oci_parse($conn, $sql);
+                $rowcount = oci_num_rows($sql);
+                if($rowcount > 0){
+                    echo '<table border="1">';
+                        echo '<tr>
+                            <th>Kurzus ID</th>
+                            <th>Kurzus név</th>
+                            <th>Követelménytípus</th>
+                            <th>Kurzustípus</th>
+                            <th>Kurzus Kód</th>
+                            </tr>';
+
+                    while($row = oci_fetch_assoc($sql)){
+                        echo '<tr>';
+                            echo '<td>'.$sql['KURZUSID'].'</td>';
+                            echo '<td>'.$sql['KNEV'].'</td>';
+                            echo '<td>'.$sql['KOVETELMENYTIPUS'].'</td>';
+                            echo '<td>'.$sql['KURZUSTIPUS'].'</td>';
+                            echo '<td>'.$sql['KURZUSKOD'].'</td>';
+                        echo '</tr>';
+                    }
+                    echo '</table>';
+                } else{
+                    echo '<p>Még nincs megjeleníthető adat.</p>';
+                }
+
+            }
+            ?>
+            <br><br><br>
+            <?php
+            //órák listázása kurzusok szerint
+            if(isset($_POST['kurzusnev'])){
+                $kurzusnev = $_POST['kurzusnev'];
+                if($sql = 'SELECT * FROM ORAK INNER JOIN TARTJA WHERE OKTATOID = $currentuser AND ORAK.KURZUSNEV = $kurzusnev'){
+                    $result = oci_parse($conn, $sql);
+                    $rowcount = oci_num_rows($sql);
+                    if($rowcount > 0){
+                        echo '<table border="1">';
+                            echo '<tr>
+                                <th>Óra ID</th>
+                                <th>Óra időpontja</th>
+                                <th>Terem</th>
+                                </tr>';
+
+                        while($row = oci_fetch_assoc($sql)){
+                            echo '<tr>';
+                                echo '<td>'.$sql['ORAID'].'</td>';
+                                echo '<td>'.$sql['OKEZDET'].' - '.$sql['OVEGE'].'</td>';
+                                echo '<td>'.$sql['TEREMID'].'</td>';
+                            echo '</tr>';
+                        }
+                        echo '</table>';
+                    } else{
+                        echo '<p>Még nincs megjeleníthető adat.</p>';
+                    }
+                }
+            }
+
+        ?>
     </div>
 </body>
-</html></div></main></header>
+</html>
