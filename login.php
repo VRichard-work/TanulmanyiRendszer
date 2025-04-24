@@ -1,17 +1,14 @@
 <?php
+include 'functions.php';
 session_start();
+
 
 if(isset($_SESSION['userType'])) {
   header("Location: index.php");
 }
 
   // Csatlakozás
-  $conn = oci_connect("C##CHCGUK", "C##CHCGUK", "localhost:1521/orania2.inf.u-szeged.hu");
-  if (!$conn) {
-    $e = oci_error();
-    echo "Connection failed: " . $e['message'];
-    exit;
-  }
+  $conn = Connect();
   // Login form feldolgozása
   if(isset($_POST['userType']) && isset($_POST['username']) && isset($_POST['password'])) {
     $userType = $_POST['userType'];

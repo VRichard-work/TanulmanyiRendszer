@@ -1,3 +1,10 @@
+<?php
+include 'functions.php';
+Session();
+Stud();
+$conn = Connect();
+?>
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>

@@ -1,4 +1,5 @@
 <?php
+include 'functions.php';
 session_start();
 
 if(!isset($_SESSION['userType'])) {
@@ -6,13 +7,10 @@ if(!isset($_SESSION['userType'])) {
 }
 
 
+
 // Csatlakozás
-$conn = oci_connect("C##CHCGUK", "C##CHCGUK", "localhost:1521/orania2.inf.u-szeged.hu");
-if (!$conn) {
-  $e = oci_error();
-  echo "Connection failed: " . $e['message'];
-  exit;
-}
+$conn = Connect();
+
 // SQL parancs előkészítése
 // A felhasználó típusa alapján állítjuk be a lekérdezést
 if($_SESSION['userType'] == 'admin') {
