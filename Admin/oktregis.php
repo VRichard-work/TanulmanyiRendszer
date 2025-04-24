@@ -118,7 +118,7 @@ if(isset($_POST['name']) && isset($_POST['password']) && isset($_POST['id'])){
             <input type="password" id="password" name="password" placeholder="Jelszó" required>
 
             <button type="submit">Regisztráció</button>
-            <a href="apanel.html" class="back-link">Vissza a főpanelre</a>
+            <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
         </form>
     </div>
 </body>

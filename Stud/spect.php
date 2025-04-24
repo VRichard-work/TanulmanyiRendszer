@@ -97,7 +97,7 @@ $conn = Connect();
             </div>
         </div>
 
-        <a href="panel.html">Vissza a Panelre</a>
+        <a href="panel.php">Vissza a Panelre</a>
     </div>
 </div>
 

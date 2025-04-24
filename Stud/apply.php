@@ -101,7 +101,7 @@ $conn = Connect();
             </select>
 
             <button class="jelentkezes" type="submit">Jelentkezem</button>
-            <a href="panel.html">Vissza a Panelre</a>
+            <a href="panel.php">Vissza a Panelre</a>
         </div>
     </div>
 </body>

@@ -136,7 +136,7 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kovtipus']) && 
             <input type="text" id="kod" name="kod" placeholder="Add meg a kurzus kodját" required>
 
             <button type="submit">Regisztráció</button>
-            <a href="apanel.html" class="back-link">Vissza a főpanelre</a>
+            <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
         </form>
     </div>
 </body>

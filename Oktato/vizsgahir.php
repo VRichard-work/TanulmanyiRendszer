@@ -10,6 +10,6 @@ $conn = Connect();
 
     </head>
     <body>
-
+        <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
     </body>
 </html>

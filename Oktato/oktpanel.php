@@ -64,9 +64,9 @@ $conn = Connect();
     </header>
     <div class="container">
         <div class="panel">
-            <a href="kurzupd.html">Kurzusok, órák</a>
-            <a href="spect.html">Vizsgák hirdetése</a>
-            <a href="vizsga.html">Jegyek beírása</a>
+            <a href="kurzusview.php">Kurzusok, órák</a>
+            <a href="spect.php">Vizsgák hirdetése</a>
+            <a href="vizsga.php">Jegyek beírása</a>
         </div>
     </div>
 </body>

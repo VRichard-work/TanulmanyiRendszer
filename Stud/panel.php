@@ -64,9 +64,9 @@ $conn = Connect();
     </header>
     <div class="container">
         <div class="panel">
-            <a href="apply.html">Kurzus / Óra jelentkezés</a>
-            <a href="spect.html">Felvett órák / kurzusok</a>
-            <a href="vizsga.html">Vizsgajelentkezés</a>
+            <a href="apply.php">Kurzus / Óra jelentkezés</a>
+            <a href="spect.php">Felvett órák / kurzusok</a>
+            <a href="vizsga.php">Vizsgajelentkezés</a>
         </div>
     </div>
 </body>
