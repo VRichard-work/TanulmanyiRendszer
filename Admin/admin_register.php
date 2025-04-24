@@ -9,6 +9,11 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['felhs
   $felhsz = $_POST['felhsz'];
   $id = $_POST['id'];
   $szulet = $_POST['szulet'];
+  if(isset($_POST['szakid'])) {
+    $szakid = $_POST['szakid'];
+  } else {
+    $szakid = null;
+  }
   // id ellenőrzése
   // SQL parancs előkészítése
   if($felhsz == 'oktato') {
@@ -31,7 +36,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['felhs
       if($felhsz == 'oktato') {
         $sql = "INSERT INTO OKTATOK (OKTATOID,ONEV,OJELSZO) VALUES (:id, :username, :password)";
     } elseif ($felhsz == 'hallg') {
-        $sql = "INSERT INTO HALLGATOK (HALLGATOID,HNEV,HJELSZO,SZULETES) VALUES (:id, :username, :password, TO_DATE(:szulet, 'YYYY-MM-DD'))";
+        $sql = "INSERT INTO HALLGATOK (HALLGATOID,HNEV,HJELSZO,SZULETES) VALUES (:id, :username, :password, TO_DATE(:szulet, 'YYYY-MM-DD'), :szakid)";
     }
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
@@ -39,6 +44,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['felhs
     oci_bind_by_name($stmt, ':password', $password);
     if($felhsz == 'hallg') {
         oci_bind_by_name($stmt, ':szulet', $szulet);
+        oci_bind_by_name($stmt, ':szakid', $szakid);
     }
 
     if(oci_execute($stmt)) {
@@ -85,7 +91,10 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['felhs
         <option value="oktato">Oktato</option>
         <option value="hallg">Hallgató</option>
       </select>
-
+      <br>
+      <label for="szakid">Szak ID</label>
+      <input type="text" id="szakid" name="szakid">
+      <br>
       <input type="submit" value="Regisztráció">
     </form>
   </div>
