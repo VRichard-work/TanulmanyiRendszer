@@ -75,6 +75,8 @@ $conn = Connect();
         <a href="studreg.php">👨‍🎓 Diákok felvitele</a>
         <a href="oktregis.php">👩‍🏫 Tanárok felvitele</a>
         <a href="kurzregist.php">📚 Kurzusok felvitele</a>
+        <a href="teremregist.php">💼 Terem felvitele</a>
+        <a href="oraregist.php">📖 Óra felvitele</a>
     </div>
 </div>
 
