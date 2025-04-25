@@ -77,6 +77,7 @@ $conn = Connect();
         <a href="kurzregist.php">📚 Kurzusok felvitele</a>
         <a href="teremregist.php">💼 Terem felvitele</a>
         <a href="oraregist.php">📖 Óra felvitele</a>
+        <a href="admin_register.php">👤 Admin felvitele</a>
     </div>
 </div>
 

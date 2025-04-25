@@ -4,16 +4,16 @@ Session();
 Admin();
 $conn = Connect();
 
-if(isset($_POST['name']) && isset($_POST['id'])){
+if(isset($_POST['ferohely']) && isset($_POST['id'])){
     $id=$_POST['id'];
-    $nev=$_POST['name'];
+    $ferohely=$_POST['ferohely'];
     //hogyan ellenőrizzük h egyedi e az id?
 
-    $sql = "INSERT INTO TEREM (TEREMID,FEROHELY) VALUES (:id, :name)";
+    $sql = "INSERT INTO TERMEK (TEREMID,FEROHELY) VALUES (:id, :ferohely)";
     
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
-    oci_bind_by_name($stmt, ':name', $username);
+    oci_bind_by_name($stmt, ':ferohely', $ferohely);
     if(oci_execute($stmt)) {
         echo "Sikeres regisztráció!";
         header("Location: apanel.php");
@@ -106,10 +106,10 @@ if(isset($_POST['name']) && isset($_POST['id'])){
         <h1>Oktató Regisztráció</h1>
         <form action="teremregist.php" method="POST">
             <label for="id">Terem ID:</label>
-            <input type="text" id="id" name="id" placeholder="Oktató ID" required>
+            <input type="text" id="id" name="id" placeholder="Terem ID" required>
 
             <label for="name">Férőhely:</label>
-            <input type="text" id="name" name="name" placeholder="Név" required>
+            <input type="text" id="name" name="ferohely" placeholder="Férőhely" required>
 
             <button type="submit">Regisztráció</button>
             <a href="apanel.php" class="back-link">Vissza a főpanelre</a>

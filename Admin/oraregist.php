@@ -12,7 +12,7 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && is
     $kod=$_POST['kod'];
     //egyedi id ellenőrzése?
 
-    $sql = "INSERT INTO ORAK (ORAID,ONEV,OKEZDET,OVEGE,KURZUSID) VALUES (:id, :name, :kovtipus, :kutipus, :kod)";
+    $sql = "INSERT INTO ORAK (ORAID,ONEV,OKEZDET,OVEGE,KURZUSID) VALUES (:id, :name, :kovtipus, :kurtipus, :kod)";
     
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);

@@ -12,11 +12,11 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kovtipus']) && 
     $kod=$_POST['kod'];
     //egyedi id ellenőrzése?
 
-    $sql = "INSERT INTO KURZUSOK (KURZUSID,KNEV,KOVETELMENYTIPUS,KURZUSTIPUS,KURZUSKOD) VALUES (:id, :name, :kovtipus, :kutipus, :kod)";
+    $sql = "INSERT INTO KURZUSOK (KURZUSID,KNEV,KOVETELMENYTIPUS,KURZUSTIPUS,KURZUSKOD) VALUES (:id, :name, :kovtipus, :kurtipus, :kod)";
     
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
-    oci_bind_by_name($stmt, ':name', $username);
+    oci_bind_by_name($stmt, ':name', $name);
     oci_bind_by_name($stmt, ':kovtipus', $kovtipus);
     oci_bind_by_name($stmt, ':kurtipus', $kurtipus);
     oci_bind_by_name($stmt, ':kod', $kod);
@@ -121,15 +121,16 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kovtipus']) && 
 
             <label for="department">Követelménytipus</label>
             <select id="kovtipus" name="kovtipus" required>
-                <option value="">Nincs</option>
-                <option value="">Kollokvium</option>
-                <option value="">Gyakorlati vizsga</option>
+                <option value="Nincs">Nincs</option>
+                <option value="KOLLOKVIUM">Kollokvium</option>
+                <option value="GYAKVIZSGA">Gyakorlati vizsga</option>
             </select>
 
             <label for="department">Kurzus tipusa</label>
             <select id="kurtipus" name="kurtipus" required>
-                <option value="">Előadás</option>
-                <option value="">Gyakorlat</option>
+                <option value="">Válasszon egyet!</option>
+                <option value="ELOADAS">Előadás</option>
+                <option value="GYAK">Gyakorlat</option>
             </select>
 
             <label for="name">Kurzus kodja:</label>
