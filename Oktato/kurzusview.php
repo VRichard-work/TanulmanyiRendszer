@@ -85,84 +85,78 @@ $conn = Connect();
         <h1>A kurzusok</h1>
 
         <form action="kurzusview.php" method="POST">
-            <label for="kurzusnev">Válasszon félévet</label>
+            <label for="kurzusnev">Kurzus választása</label>
             <select id="kurzusnev" name="kurzusnev" required>
                 <?php
                 //kurzus választása az órák listázásához
-                    $sql = "SELECT KURZUSOK.KNEV FROM KURZUSOK INNER JOIN FELELOS ON KURZUSOK.KURZUSID = FELELOS.KURZUSID WHERE FELELOS.OKTATOID = :username";
+                    $sql = "SELECT KURZUSOK.KNEV FROM FELELOS
+                     INNER JOIN KURZUSOK 
+                     ON FELELOS.KURZUSID = KURZUSOK.KURZUSID 
+                     WHERE FELELOS.OKTATOID = :username";
                     $result = oci_parse($conn, $sql);
                     oci_bind_by_name($result, ':username',$_SESSION['username']);
                     oci_execute($result);
-                    $rowcount = oci_num_rows($result);
-                    if($rowcount > 0){
-                        while($row = oci_fetch_array($result)){?>
-                            <option value="<?$row["KNEV"]?>"><?$row['KNEV']?></option>
-                        <?php }
-                    } else{ ?>
+                    $isnul = false;
+                    while($row = oci_fetch_array($result)){
+                        $isnul = true;
+                        ?>
+                        
+                        <option value="<?php echo $row['KNEV']; ?>"><?php echo $row['KNEV']; ?></option>
+                    <?php }
+                    if(!$isnul){ ?>
                         <option value="0">Nem létezik Kurzus</option>
-                    <?php
-                    }
+                    <?php }
                     oci_free_statement($result);
+
                 ?>
             </select>
+            <button type="submit">Kurzusok megjelenítése</button>
         </form>
 
         <?php
         //kurzusok listázása
-                $sql="SELECT KURZUSOK.KNEV FROM KURZUSOK INNER JOIN FELELOS ON KURZUSOK.KURZUSID = FELELOS.KURZUSID WHERE FELELOS.OKTATOID = :username";
-                $result = oci_parse($conn, $sql);
-                oci_bind_by_name($result, ':username', $_SESSION['username']);
-                oci_execute($result);
-                $rowcount = oci_num_rows($result);
-                if($rowcount > 0){
-                    echo '<table border="1">';
-                        echo '<tr>
-                            <th>Kurzus ID</th>
-                            <th>Kurzus név</th>
-                            <th>Követelménytípus</th>
-                            <th>Kurzustípus</th>
-                            <th>Kurzus Kód</th>
-                            </tr>';
-
-                    while($row = oci_fetch_assoc($result)){
-                        echo '<tr>';
-                            echo '<td>'.$sql['KURZUSID'].'</td>';
-                            echo '<td>'.$sql['KNEV'].'</td>';
-                            echo '<td>'.$sql['KOVETELMENYTIPUS'].'</td>';
-                            echo '<td>'.$sql['KURZUSTIPUS'].'</td>';
-                            echo '<td>'.$sql['KURZUSKOD'].'</td>';
-                        echo '</tr>';
-                    }
-                    echo '</table>';
-                } else{
-                    echo '<p>Még nincs megjeleníthető adat.</p>';
-                }
-
-            ?>
-            <br><br><br>
+                if(isset($_POST['kurzusnev'])){ ?>
+            <h1>Óráid</h1>
             <?php
-            //órák listázása kurzusok szerint
-            if(isset($_POST['kurzusnev'])){
-                $kurzusnev = $_POST['kurzusnev'];
-                if($sql = 'SELECT * FROM ORAK INNER JOIN TARTJA WHERE OKTATOID = :username AND ORAK.KURZUSNEV = :kurzusnev'){
+                    $sql="SELECT * FROM ORAK
+                     INNER JOIN KURZUSOK
+                     ON ORAK.KURZUSID = KURZUSOK.KURZUSID
+                     WHERE KURZUSOK.KNEV = :NEV";
                     $result = oci_parse($conn, $sql);
-                    oci_bind_by_name($result, ':username', $_SESSION['username']);
-                    oci_bind_by_name($result, ':kurzusnev', $kurzusnev);
+                    oci_bind_by_name($result, ':NEV', $_POST['kurzusnev']);
                     oci_execute($result);
-                    $rowcount = oci_num_rows($result);
-                    if($rowcount > 0){
+                    $isnul = false;
+                    $first = oci_fetch_assoc($result);
+                    if($first){
                         echo '<table border="1">';
                             echo '<tr>
-                                <th>Óra ID</th>
-                                <th>Óra időpontja</th>
+                                <th>Kurzus ID</th>
+                                <th>Kurzus név</th>
+                                <th>Kurzustípus</th>
+                                <th>Kurzus Kód</th>
+                                <th>Óra kezdete</th>
+                                <th>Óra vége</th>
                                 <th>Terem</th>
                                 </tr>';
-
+                        echo '<tr>';
+                            echo '<td>'.$first['ORAID'].'</td>';
+                            echo '<td>'.$first['KNEV'].'</td>';
+                            echo '<td>'.$first['KURZUSTIPUS'].'</td>';
+                            echo '<td>'.$first['KURZUSKOD'].'</td>';
+                            echo '<td>'.$first['OKEZDET'].'</td>';
+                            echo '<td>'.$first['OVEGE'].'</td>';
+                            echo '<td>'.$first['TEREMID'].'</td>';
+                        echo '</tr>';
+                        $isnul = true;
                         while($row = oci_fetch_assoc($result)){
                             echo '<tr>';
-                                echo '<td>'.$sql['ORAID'].'</td>';
-                                echo '<td>'.$sql['OKEZDET'].' - '.$sql['OVEGE'].'</td>';
-                                echo '<td>'.$sql['TEREMID'].'</td>';
+                                echo '<td>'.$row['ORAID'].'</td>';
+                                echo '<td>'.$row['KNEV'].'</td>';
+                                echo '<td>'.$row['KURZUSTIPUS'].'</td>';
+                                echo '<td>'.$row['KURZUSKOD'].'</td>';
+                                echo '<td>'.$row['OKEZDET'].'</td>';
+                                echo '<td>'.$row['OVEGE'].'</td>';
+                                echo '<td>'.$row['TEREMID'].'</td>';
                             echo '</tr>';
                         }
                         echo '</table>';
@@ -170,7 +164,10 @@ $conn = Connect();
                         echo '<p>Még nincs megjeleníthető adat.</p>';
                     }
                 }
-            }
+            ?>
+            <br><br><br>
+            <?php
+            //órák listázása kurzusok szerint
 
         ?>
         <a href="oktpanel.php" class="back-link">Vissza a főpanelre</a>
