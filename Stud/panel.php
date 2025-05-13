@@ -14,59 +14,85 @@ $conn = Connect();
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
-        }
-        header {
-            background-color: #023c66;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            font-size: 2.5rem;
-        }
-        .container {
             display: flex;
             justify-content: center;
-            margin-top: 50px;
+            align-items: center;
+            height: 100vh;
         }
-        .panel {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 300px;
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
         }
-        .panel h2 {
-            margin-bottom: 1rem;
+        h1 {
             text-align: center;
+            color: #3b3b3b;
         }
-        .panel a {
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, button {
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        #department{
+            margin-bottom: 50px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0.8rem;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
             display: block;
-            text-decoration: none;
-            color: #005796;
-            background-color: #75aafa;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 5px;
+            margin-top: 1rem;
             text-align: center;
-            transition: 0.3s ease;
+            color: #005796;
+            text-decoration: none;
+            background-color: #75aafa;
+            padding: 0.8rem;
+            border-radius: 5px;
         }
-        .panel a:hover {
+        a:hover {
             background-color: #02132c;
+            color: white;
         }
     </style>
 
 </head>
 <body>
-    <header>
-        Diák Panel
-    </header>
     <div class="container">
+        <h1>Diák Panel</h1>
         <div class="panel">
             <a href="apply.php">Kurzus / Óra jelentkezés</a>
             <a href="spect.php">Felvett órák / kurzusok</a>
             <a href="vizsga.php">Vizsgajelentkezés</a>
+            <form action="../logout.php" method="POST">
+                <button type="submit">Kijelentkezés</button>
+            </form>
         </div>
     </div>
 </body>

@@ -82,6 +82,6 @@ else if($_SESSION['userType'] == 'stud') {
     <button onclick="location.href='login.php'">Bejelentkezés</button>
     <form action="logout.php" method="POST">
         <input type="submit" value="Kilépés" />
-      </form>
+    </form>
   </body>
 </html>

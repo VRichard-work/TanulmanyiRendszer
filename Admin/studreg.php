@@ -137,9 +137,9 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
                 <option value="0">Válassz szakot</option>
                 <option value="1">SZAKOK:SZNEV</option>
             </select>
-                <input type="submit" value="Regisztráció" class="submit-button">
             
-            <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
+            <button type="submit">Regisztráció</button>
+            <a href="apanel.php">Vissza a főpanelre</a>
         </form>
     </div>
 </body>
