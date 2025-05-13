@@ -134,8 +134,25 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
 
             <label for="szakid">Szak:</label>
             <select id="department" name="szakid" required>
-                <option value="0">Válassz szakot</option>
-                <option value="1">SZAKOK:SZNEV</option>
+                <?php
+                //szakid választása a kurzusukhoz
+                if($sql = "SELECT SZAKID, SZNEV FROM SZAKOK"){
+                    $result = oci_parse($conn, $sql);
+                    $rowcount = oci_num_rows($result);
+                    oci_define_by_name($result, 'SZAKID', $szakid);
+                    oci_define_by_name($result, 'SZNEV', $szaknev);
+                    oci_execute($result);
+                    $isnul = false;
+                    while($rowcount = oci_fetch_array($result)){
+                        $isnul = true;
+                        ?> 
+                        <option value="<?php echo $rowcount['SZAKID']; ?>"><?php echo $rowcount['SZAKID'] . ' - ' . $rowcount['SZNEV']; ?></option>
+                    <?php }
+                    if(!$isnul){ ?>
+                        <option value="0">Nem létezik Kurzus</option>
+                    <?php }
+                }
+                ?>
             </select>
             
             <button type="submit">Regisztráció</button>

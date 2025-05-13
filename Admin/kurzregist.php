@@ -128,7 +128,7 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kovtipus']) && 
 
             <label for="department">Kurzus tipusa</label>
             <select id="kurtipus" name="kurtipus" required>
-                <option value="">Válasszon egyet!</option>
+                <option value="NINCS">Válasszon egyet!</option>
                 <option value="ELOADAS">Előadás</option>
                 <option value="GYAK">Gyakorlat</option>
             </select>

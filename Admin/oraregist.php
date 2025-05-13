@@ -4,7 +4,7 @@ Session();
 Admin();
 $conn = Connect();
 
-if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && isset($_POST['veg']) && isset($_POST['kod'])){
+if(isset($_POST['id']) && isset($_POST['kezdet']) && isset($_POST['veg']) && isset($_POST['kod'])){
     $id=$_POST['id'];
     $name=$_POST['name'];
     $kovtipus=$_POST['kezdet'];
@@ -12,13 +12,13 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && is
     $kod=$_POST['kod'];
     //egyedi id ellenőrzése?
 
-    $sql = "INSERT INTO ORAK (ORAID,ONEV,OKEZDET,OVEGE,KURZUSID) VALUES (:id, :name, :kovtipus, :kurtipus, :kod)";
+    $sql = "INSERT INTO ORAK (ORAID,OKEZDET,OVEGE,TEREMID,KURZUSID) VALUES (:id, :kovtipus, :kurtipus, :terem, :kod)";
     
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
-    oci_bind_by_name($stmt, ':name', $name);
     oci_bind_by_name($stmt, ':kezdet', $kovtipus);
     oci_bind_by_name($stmt, ':veg', $kurtipus);
+    oci_bind_by_name($stmt, ':terem', $terem);
     oci_bind_by_name($stmt, ':kod', $kod);
     if(oci_execute($stmt)) {
         echo "Sikeres regisztráció!";
@@ -116,29 +116,53 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && is
             <label for="id">Óra azonosítója:</label>
             <input type="text" name="id" id="id" placeholder="Óra ID" required>
 
-            <label for="name">Óra név:</label>
-            <input type="text" id="name" name="name" placeholder="Add meg az óra nevét" required>
-
             <label for="kezdet">Óra kezdete:</label>
             <input type="time" id="kezdet" name="kezdet" required>
 
             <label for="veg">Óra vége:</label>
             <input type="time" id="veg" name="veg" required>
 
+            <label for="terem">Terem(terem kód):</label>
+            <select name="terem" id="terem">
+                <?php
+                //teremid választása az órákhoz
+                if($sql = "SELECT TEREMID FROM TERMEK"){
+                    $result = oci_parse($conn, $sql);
+                    $rowcount = oci_num_rows($result);
+                    oci_define_by_name($result, 'TEREMID', $kurzusid);
+                    oci_execute($result);
+                    $isnul = false;
+                    while($rowcount = oci_fetch_array($result)){
+                        $isnul = true;
+                        ?> 
+                        <option value="<?php echo $rowcount['TEREMID']; ?>"><?php echo $rowcount['TEREMID']; ?></option>
+                    <?php }
+                    if(!$isnul){ ?>
+                        <option value="0">Nem létezik Kurzus</option>
+                    <?php }
+                }
+                ?>
+            </select>
+
             <label for="kod">Kurzushoz tartozik(kurzus kód):</label>
             <select name="kod" id="kod">
                 <?php
                 //kurzusid választása az órákhoz
-                if($sql = "SELECT KURZUSID FROM KURZUSOK"){
+                if($sql = "SELECT KURZUSID, KNEV FROM KURZUSOK"){
                     $result = oci_parse($conn, $sql);
                     $rowcount = oci_num_rows($result);
-                    if($rowcount > 0){
-                        while($row = oci_fetch_assoc($result)){
-                            echo '<option value="'.$result.'">'.$result.'</option>';
-                        }
-                    } else{
-                        echo '<option value="">Még nincs kurzus regisztrálva!</option>';
-                    }
+                    oci_define_by_name($result, 'KURZUSID', $kurzusid);
+                    oci_define_by_name($result, 'KNEV', $kurzusnev);
+                    oci_execute($result);
+                    $isnul = false;
+                    while($rowcount = oci_fetch_array($result)){
+                        $isnul = true;
+                        ?> 
+                        <option value="<?php echo $rowcount['KURZUSID']; ?>"><?php echo $rowcount['KURZUSID'] . ' - ' . $rowcount['KNEV']; ?></option>
+                    <?php }
+                    if(!$isnul){ ?>
+                        <option value="0">Nem létezik Kurzus</option>
+                    <?php }
                 }
                 ?>
                 <option value=""></option>
@@ -148,5 +172,7 @@ if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['kezdet']) && is
             <a href="apanel.php" class="back-link">Vissza a főpanelre</a>
         </form>
     </div>
+    
+    
 </body>
 </html>
