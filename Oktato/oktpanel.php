@@ -88,8 +88,8 @@ $conn = Connect();
         <h1>Oktató Panel</h1>
         <div class="panel">
             <a href="kurzusview.php">Kurzusok, órák</a>
-            <a href="spect.php">Vizsgák hirdetése(Nem mukodik)</a>
-            <a href="vizsgahir.php">Jegyek beírása</a>
+            <a href="vizsgahir.php">Vizsgák hirdetése</a>
+            <a href="jegyek.php">Jegyek beírása(Nem mukodik)</a>
             <form action="../logout.php" method="POST">
                 <button type="submit">Kijelentkezés</button>
             </form>
