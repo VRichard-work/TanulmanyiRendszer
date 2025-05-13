@@ -6,7 +6,7 @@ $conn = Connect();
 
 if(isset($_POST['name']) && isset($_POST['password']) && isset($_POST['id'])){
     $id=$_POST['id'];
-    $nev=$_POST['name'];
+    $name=$_POST['name'];
     $password=$_POST['password'];
     //hogyan ellenőrizzük h egyedi e az id?
 
@@ -15,7 +15,7 @@ if(isset($_POST['name']) && isset($_POST['password']) && isset($_POST['id'])){
     
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
-    oci_bind_by_name($stmt, ':name', $username);
+    oci_bind_by_name($stmt, ':name', $name);
     oci_bind_by_name($stmt, ':password', $password);
     if(oci_execute($stmt)) {
         echo "Sikeres regisztráció!";
