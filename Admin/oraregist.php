@@ -4,20 +4,21 @@ Session();
 Admin();
 $conn = Connect();
 
-if(isset($_POST['id']) && isset($_POST['kezdet']) && isset($_POST['veg']) && isset($_POST['kod'])){
+if(isset($_POST['id']) && isset($_POST['kezdet']) && isset($_POST['veg']) && isset($_POST['kod']) && isset($_POST['terem'])){
     $id=$_POST['id'];
-    $name=$_POST['name'];
-    $kovtipus=$_POST['kezdet'];
-    $kurtipus=$_POST['veg'];
+    $kezdet=$_POST['kezdet'];
+    $veg=$_POST['veg'];
+    $terem=$_POST['terem'];
     $kod=$_POST['kod'];
+    
     //egyedi id ellenőrzése?
 
-    $sql = "INSERT INTO ORAK (ORAID,OKEZDET,OVEGE,TEREMID,KURZUSID) VALUES (:id, :kovtipus, :kurtipus, :terem, :kod)";
+    $sql = "INSERT INTO ORAK (ORAID,OKEZDET,OVEGE,TEREMID,KURZUSID) VALUES (:id, TO_TIMESTAMP(:kezdet, 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP(:veg, 'YYYY-MM-DD HH24:MI:SS'), :terem, :kod)";
     
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
-    oci_bind_by_name($stmt, ':kezdet', $kovtipus);
-    oci_bind_by_name($stmt, ':veg', $kurtipus);
+    oci_bind_by_name($stmt, ':kezdet', $kezdet);
+    oci_bind_by_name($stmt, ':veg', $veg);
     oci_bind_by_name($stmt, ':terem', $terem);
     oci_bind_by_name($stmt, ':kod', $kod);
     if(oci_execute($stmt)) {
@@ -129,7 +130,7 @@ if(isset($_POST['id']) && isset($_POST['kezdet']) && isset($_POST['veg']) && iss
                 if($sql = "SELECT TEREMID FROM TERMEK"){
                     $result = oci_parse($conn, $sql);
                     $rowcount = oci_num_rows($result);
-                    oci_define_by_name($result, 'TEREMID', $kurzusid);
+                    oci_define_by_name($result, 'TEREMID', $teremid);
                     oci_execute($result);
                     $isnul = false;
                     while($rowcount = oci_fetch_array($result)){
@@ -138,7 +139,7 @@ if(isset($_POST['id']) && isset($_POST['kezdet']) && isset($_POST['veg']) && iss
                         <option value="<?php echo $rowcount['TEREMID']; ?>"><?php echo $rowcount['TEREMID']; ?></option>
                     <?php }
                     if(!$isnul){ ?>
-                        <option value="0">Nem létezik Kurzus</option>
+                        <option value="0">Nem létezik Ez a terem</option>
                     <?php }
                 }
                 ?>

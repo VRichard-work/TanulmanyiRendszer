@@ -160,7 +160,7 @@ $conn = Connect();
                         echo '<td>'.$first['SZULETES'].'</td>';
                         echo '<td>'.$first['SZAKID'].'</td>';
                         echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                        echo '<td><a href="torol.php?deletestud='.$first['HALLGATOID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                        echo '<td><a href="torol.php?deletestud='.$first['HALLGATOID'].'">Törlés</a></td>';
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
@@ -171,7 +171,7 @@ $conn = Connect();
                             echo '<td>'.$row['SZULETES'].'</td>';
                             echo '<td>'.$row['SZAKID'].'</td>';
                             echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                            echo '<td><a href="torol.php?deletestud='.$row['HALLGATOID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                            echo '<td><a href="torol.php?deletestud='.$row['HALLGATOID'].'">Törlés</a></td>';
                         echo '</tr>';
                     }
                     echo '</table>';
@@ -201,8 +201,8 @@ $conn = Connect();
                         echo '<td>'.$first['OKTATOID'].'</td>';
                         echo '<td>'.$first['ONEV'].'</td>';
                         echo '<td>'.$first['OJELSZO'].'</td>';
-                        echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                        echo '<td><a href="torol.php?deleteokt='.$first['OKTATOID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                        echo '<td><a href="oktmodify.php?updateokt='.$first['OKTATOID'].'">Módosítás</a></td>';
+                        echo '<td><a href="torol.php?deleteokt='.$first['OKTATOID'].'">Törlés</a></td>';
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
@@ -210,8 +210,8 @@ $conn = Connect();
                             echo '<td>'.$row['OKTATOID'].'</td>';
                             echo '<td>'.$row['ONEV'].'</td>';
                             echo '<td>'.$row['OJELSZO'].'</td>';
-                            echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                            echo '<td><a href="torol.php?deleteokt='.$row['OKTATOID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                            echo '<td><a href="oktmodify.php?updateokt='.$row['OKTATOID'].'">Módosítás</a></td>';
+                            echo '<td><a href="torol.php?deleteokt='.$row['OKTATOID'].'">Törlés</a></td>';
                         echo '</tr>';
                     }
                     echo '</table>';
@@ -245,8 +245,8 @@ $conn = Connect();
                         echo '<td>'.$first['KOVETELMENYTIPUS'].'</td>';
                         echo '<td>'.$first['KURZUSTIPUS'].'</td>';
                         echo '<td>'.$first['KURZUSKOD'].'</td>';
-                        echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                        echo '<td><a href="torol.php?deletekurz='.$first['KURZUSID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                        echo '<td><a href="kurzmodify.php?updatekurzus='.$first['KURZUSID'].'">Módosítás</a></td>';
+                        echo '<td><a href="torol.php?deletekurz='.$first['KURZUSID'].'">Törlés</a></td>';
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
@@ -256,8 +256,8 @@ $conn = Connect();
                             echo '<td>'.$row['KOVETELMENYTIPUS'].'</td>';
                             echo '<td>'.$row['KURZUSTIPUS'].'</td>';
                             echo '<td>'.$row['KURZUSKOD'].'</td>';
-                            echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                            echo '<td><a href="torol.php?deletekurz='.$row['KURZUSID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                            echo '<td><a href="kurzmodify.php?updatekurzus='.$row['KURZUSID'].'">Módosítás</a></td>';
+                            echo '<td><a href="torol.php?deletekurz='.$row['KURZUSID'].'">Törlés</a></td>';
                         echo '</tr>';
                     }
                     echo '</table>';
@@ -286,7 +286,7 @@ $conn = Connect();
                         echo '<td>'.$first['TEREMID'].'</td>';
                         echo '<td>'.$first['FEROHELY'].'</td>';
                         echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                        echo '<td><a href="torol.php?deleteterem='.$first['TEREMID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                        echo '<td><a href="torol.php?deleteterem='.$first['TEREMID'].'">Törlés</a></td>';
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
@@ -294,7 +294,7 @@ $conn = Connect();
                             echo '<td>'.$row['TEREMID'].'</td>';
                             echo '<td>'.$row['FEROHELY'].'</td>';
                             echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                            echo '<td><a href="torol.php?deleteterem='.$row['TEREMID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                            echo '<td><a href="torol.php?deleteterem='.$row['TEREMID'].'">Törlés</a></td>';
                         echo '</tr>';
                     }
                     echo '</table>';
@@ -326,8 +326,8 @@ $conn = Connect();
                         echo '<td>'.$first['OKEZDET']. ' - '.$first['OVEGE'].'</td>';
                         echo '<td>'.$first['TEREMID'].'</td>';
                         echo '<td>'.$first['KURZUSID'].'</td>';
-                        echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                        echo '<td><a href="torol.php?deleteora='.$first['ORAID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                        echo '<td><a href="oramodify.php?updateora='.$first['ORAID'].'">Módosítás</a></td>';
+                        echo '<td><a href="torol.php?deleteora='.$first['ORAID'].'">Törlés</a></td>';
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
@@ -336,8 +336,8 @@ $conn = Connect();
                             echo '<td>'.$row['OKEZDET']. ' - '.$first['OVEGE'].'</td>';
                             echo '<td>'.$row['TEREMID'].'</td>';
                             echo '<td>'.$row['KURZUSID'].'</td>';
-                            echo '<td><a href="studmodify.php">Módosítás</a></td>';
-                            echo '<td><a href="torol.php?deleteora='.$row['ORAID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                            echo '<td><a href="oramodify.php?updateora='.$row['ORAID'].'">Módosítás</a></td>';
+                            echo '<td><a href="torol.php?deleteora='.$row['ORAID'].'">Törlés</a></td>';
                         echo '</tr>';
                     }
                     echo '</table>';

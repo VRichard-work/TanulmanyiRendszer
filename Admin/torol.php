@@ -4,6 +4,20 @@ Session();
 Admin();
 $conn = Connect();
 
+//admin torles
+if(isset($_GET['deleteadmin'])){
+    $deleteadmin = $_GET['deleteadmin'];
+    $sql = "DELETE FROM ADMIN WHERE ADMINID=$deleteadmin";
+    $result = oci_parse($conn, $sql);
+    oci_execute($result);
+    if($result){
+        header("Location: ../index.php");
+    }
+    else{
+        echo 'Nem sikerült a törlés';
+    }
+}
+
 //hallgato torles
 if(isset($_GET['deletestud'])){
     $deletestud = $_GET['deletestud'];

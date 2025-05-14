@@ -80,81 +80,81 @@ else if($_SESSION['userType'] == 'stud') {
     <link rel="stylesheet" href="style.css" />
   <style>
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  margin: 0;
-  padding: 20px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
 
-h1 {
-  text-align: center;
-  color: #2c3e50;
-}
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
 
-a {
-  display: inline-block;
-  margin: 5px;
-  text-align: center;
-  font-size: 1em;
-  font-weight: bold;
-  padding: 10px 15px;
-  background-color: #75aafa;
-  color: #005796;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
+    a {
+      display: inline-block;
+      margin: 5px;
+      text-align: center;
+      font-size: 1em;
+      font-weight: bold;
+      padding: 10px 15px;
+      background-color: #75aafa;
+      color: #005796;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
 
-a:hover {
-  background-color: #2980b9;
-}
+    a:hover {
+      background-color: #2980b9;
+    }
 
-table {
-  width: 80%;
-  margin: 20px auto;
-  border-collapse: collapse;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  background-color: white;
-}
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: white;
+    }
 
-th, td {
-  padding: 12px 15px;
-  text-align: center;
-  border: 1px solid #ccc;
-}
+    th, td {
+      padding: 12px 15px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
 
-th {
-  background-color: #007BFF;
-  color: white;
-}
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
 
-.changes{
-  background-color:rgb(0, 53, 110);
-  color: white;
-}
+    .changes{
+      background-color:rgb(0, 53, 110);
+      color: white;
+    }
 
-nav {
-  margin-top: 30px;
-  text-align: center;
-}
+    nav {
+      margin-top: 30px;
+      text-align: center;
+    }
 
-form input[type="submit"] {
-  padding: 10px 20px;
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 10px;
-  font-size: 1.1em;
-  transition: background-color 0.3s;
-}
+    form input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 1.1em;
+      transition: background-color 0.3s;
+    }
 
-form input[type="submit"]:hover {
-  background-color: #c0392b;
-}
+    form input[type="submit"]:hover {
+      background-color: #c0392b;
+    }
 
 </style>
 
@@ -180,7 +180,7 @@ $sql = "SELECT * FROM ADMIN";
             echo '<td>'.$first['ADMINID'].'</td>';
             echo '<td>'.$first['AJELSZO'].'</td>';
             echo '<td><a href="Admin/adminmodify.php?updateadmin='.$first['ADMINID'].'">Módosítás</a></td>';
-            echo '<td><a href="torol.php">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+            echo '<td><a href="Admin/torol.php?deleteadmin='.$first['ADMINID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
         echo '</tr>';
         $isnul = true;
         while($row = oci_fetch_assoc($result)){
@@ -188,7 +188,7 @@ $sql = "SELECT * FROM ADMIN";
                 echo '<td>'.$row['ADMINID'].'</td>';
                 echo '<td>'.$row['AJELSZO'].'</td>';
                 echo '<td><a href="Admin/adminmodify.php?updateadmin='.$row['ADMINID'].'">Módosítás</a></td>';
-                echo '<td><a href="torol.php">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+                echo '<td><a href="Admin/torol.php?deleteadmin='.$row['ADMINID'].'">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
             echo '</tr>';
         }
         echo '</table>';
