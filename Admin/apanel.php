@@ -90,6 +90,10 @@ $conn = Connect();
 
 <div class="container">
     <h1>Admin Panel</h1>
+    <!--adminok hozzáadása-->
+    <br><br>
+    <a href="../index.php">Adminok kezelése</a>
+    <br><br><br><br>
     <div class="panel">
         <a href="studreg.php">👨‍🎓 Diákok felvitele</a>
         <br>

@@ -4,10 +4,13 @@ session_start();
 
 if(!isset($_SESSION['userType'])) {
   header("Location: login.php");
+} else{
+  Admin();
+  $conn = Connect();
 }
 
 
-
+/*
 // Csatlakozás
 $conn = Connect();
 
@@ -62,6 +65,11 @@ else if($_SESSION['userType'] == 'stud') {
     echo "<br>";
   }
 }
+  */
+
+//Megváltoztattam az admin regisztrációra, lehet én értem félre
+//de nem hiszem h szükséges a diákoknak meg a tanároknak az összes
+//kiírni
 ?>
 
 <!DOCTYPE html>
@@ -72,14 +80,46 @@ else if($_SESSION['userType'] == 'stud') {
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <nav style="display:inline-box;">
-      <ul>
-        <li><a href="index.php">Főoldal</a></li>
-        <li><a href="Admin/admin_register.php">Admin regisztráció</a></li>
-        <li><a href="login.php">Bejelentkezés</a></li>
-      </ul>
+    <h1>Adminok kezelése</h1>
+    <a href="Admin/admin_register.php">Új admin hozzáadása</a>
+<?php
+$sql = "SELECT * FROM ADMIN";
+    $result = oci_parse($conn, $sql);
+    oci_execute($result);
+    $isnul = false;
+    $first = oci_fetch_assoc($result);
+    if($first){
+        echo '<table border="1">';
+        echo '<tr>
+            <th>Admin azonosító</th>
+            <th>Admin jelszó</th>
+            <th>Adatok módosítása</th>
+            <th>Terem törlése</th>
+            </tr>';
+        echo '<tr>';
+            echo '<td>'.$first['ADMINID'].'</td>';
+            echo '<td>'.$first['AJELSZO'].'</td>';
+            echo '<td><a href="Admin/adminmodify.php?updateadmin='.$first['ADMINID'].'">Módosítás</a></td>';
+            echo '<td><a href="torol.php">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+        echo '</tr>';
+        $isnul = true;
+        while($row = oci_fetch_assoc($result)){
+            echo '<tr>';
+                echo '<td>'.$row['ADMINID'].'</td>';
+                echo '<td>'.$row['AJELSZO'].'</td>';
+                echo '<td><a href="Admin/adminmodify.php?updateadmin='.$row['ADMINID'].'">Módosítás</a></td>';
+                echo '<td><a href="torol.php">Törlés</a></td>'; //id + a sor id-ja a totol.php-n belul!!!
+            echo '</tr>';
+        }
+        echo '</table>';
+    } else{
+        echo '<p>Még nincs megjeleníthető adat.</p>';
+    }
 
-    <button onclick="location.href='login.php'">Bejelentkezés</button>
+?>
+    <nav style="display:inline-box;">
+    <a href="Admin/apanel.php">Admin panel</a>
+
     <form action="logout.php" method="POST">
         <input type="submit" value="Kilépés" />
     </form>
