@@ -11,80 +11,119 @@ $conn = Connect();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-<!--
-        <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+    }
 
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #3b3b3b;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        input, select, button {
-            margin-top: 5px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        #department{
-            margin-bottom: 50px;
-        }
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+    }
 
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 0.8rem;
-            margin-top: 20px;
-            max-width: 300px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+    h1 {
+        text-align: center;
+        color: #3b3b3b;
+        font-size: 2.4em;
+        margin-bottom: 30px;
+    }
 
-        a {
-            display: block;
-            margin-top: 1rem;
-            text-align: center;
-            color: #005796;
-            text-decoration: none;
-            background-color: #75aafa;
-            padding: 0.8rem;
-            border-radius: 5px;
-            max-width: 300px;
-        }
-        a:hover {
-            background-color: #02132c;
-            color: white;
-        }
-    </style>
--->
+    a {
+        display: inline-block;
+        margin: 10px 10px 20px 0;
+        text-align: center;
+        color: #005796;
+        text-decoration: none;
+        background-color: #75aafa;
+        padding: 10px 16px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+    }
+
+    a:hover {
+        background-color: #02132c;
+        color: white;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+        background-color: #fdfdfd;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: center;
+        font-size: 15px;
+    }
+
+    th {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    .changes{
+        background-color:rgb(0, 53, 110);
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #e0f0ff;
+    }
+
+    button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 0.8rem 1.2rem;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+    }
+
+    form button[type="submit"]:hover {
+    background-color: #c0392b;
+    }
+</style>
+
 </head>
 <body>
 
@@ -111,8 +150,8 @@ $conn = Connect();
                         <th>Hallgató jelszó</th>
                         <th>Hallgató születési dátuma</th>
                         <th>Hallgató szak (szakid)</th>
-                        <th>Adatok módosítása</th>
-                        <th>Hallgató törlése</th>
+                        <th class="changes">Adatok módosítása</th>
+                        <th class="changes">Hallgató törlése</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['HALLGATOID'].'</td>';
@@ -155,8 +194,8 @@ $conn = Connect();
                         <th>Oktato azonosító</th>
                         <th>Oktató név</th>
                         <th>Oktató jelszó</th>
-                        <th>Adatok módosítása</th>
-                        <th>Oktató törlése</th>
+                        <th class="changes">Adatok módosítása</th>
+                        <th class="changes">Oktató törlése</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['OKTATOID'].'</td>';
@@ -197,8 +236,8 @@ $conn = Connect();
                         <th>Követelménytípus</th>
                         <th>Kurzus típusa</th>
                         <th>Kurzuskód</th>
-                        <th>Adatok módosítása</th>
-                        <th>Kurzus törlése</th>
+                        <th class="changes">Adatok módosítása</th>
+                        <th class="changes">Kurzus törlése</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['KURZUSID'].'</td>';
@@ -240,8 +279,8 @@ $conn = Connect();
                     echo '<tr>
                         <th>Terem azonosító</th>
                         <th>Férőhely</th>
-                        <th>Adatok módosítása</th>
-                        <th>Terem törlése</th>
+                        <th class="changes">Adatok módosítása</th>
+                        <th class="changes">Terem törlése</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['TEREMID'].'</td>';
@@ -279,8 +318,8 @@ $conn = Connect();
                         <th>Óra Időtartama</th>
                         <th>Terem azonosító/th>
                         <th>Kurzus azonosító</th>
-                        <th>Adatok módosítása</th>
-                        <th>Óra törlése</th>
+                        <th class="changes">Adatok módosítása</th>
+                        <th class="changes">Óra törlése</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['ORAID'].'</td>';

@@ -86,6 +86,8 @@ if(isset($_SESSION['userType'])) {
         h1 {
             text-align: center;
             color: #3b3b3b;
+            font-size: 2.2em;
+            margin-bottom: 20px;
         }
         form {
             display: flex;
@@ -101,6 +103,7 @@ if(isset($_SESSION['userType'])) {
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+            width: 100%;
         }
         #department{
             margin-bottom: 50px;
@@ -136,7 +139,7 @@ if(isset($_SESSION['userType'])) {
   </head>
   <body>
     <div class="container">
-      <h2>Bejelentkezés</h2>
+      <h1>Bejelentkezés</h1>
       <form action="login.php" method="POST">
         <label for="userType">Felhasználó típusa</label>
         <select name="userType" id="userType" required>
