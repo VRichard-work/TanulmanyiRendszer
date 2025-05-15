@@ -132,6 +132,7 @@ $conn = Connect();
     <!--adminok hozzáadása-->
     <br><br>
     <a href="../index.php">Adminok kezelése</a>
+    <a href="szakadatok.php">Szak adatok</a>
     <br><br><br><br>
     <div class="panel">
         <a href="studreg.php">👨‍🎓 Diákok felvitele</a>
