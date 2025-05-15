@@ -87,4 +87,18 @@ if(isset($_GET['deleteora'])){
         echo 'Nem sikerült a törlés';
     }
 }
+
+//szak törlése
+if(isset($_GET['deleteszak'])){
+    $deleteszak = $_GET['deleteszak'];
+    $sql = "DELETE FROM SZAKOK WHERE SZAKID=$deleteszak";
+    $result = oci_parse($conn, $sql);
+    oci_execute($result);
+    if($result){
+        header("Location: apanel.php");
+    }
+    else{
+        echo 'Nem sikerült a törlés';
+    }
+}
 ?>

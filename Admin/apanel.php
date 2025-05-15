@@ -220,6 +220,43 @@ $conn = Connect();
                 }
             ?>
             <br>
+            <a href="szakregist.php">Szak felvitele</a>
+            <br>
+            <?php
+            $sql = "SELECT * FROM SZAKOK";
+                $result = oci_parse($conn, $sql);
+                oci_execute($result);
+                $isnul = false;
+                $first = oci_fetch_assoc($result);
+                if($first){
+                    echo '<table border="1">';
+                    echo '<tr>
+                        <th>Szak azonosító</th>
+                        <th>Szak neve</th>
+                        <th class="changes">Adatok módosítása</th>
+                        <th class="changes">Terem törlése</th>
+                        </tr>';
+                    echo '<tr>';
+                        echo '<td>'.$first['SZAKID'].'</td>';
+                        echo '<td>'.$first['SZNEV'].'</td>';
+                        echo '<td><a href="szakmodify.php?updateszak='.$first['SZAKID'].'">Módosítás</a></td>';
+                        echo '<td><a href="torol.php?deleteszak='.$first['SZAKID'].'">Törlés</a></td>';
+                    echo '</tr>';
+                    $isnul = true;
+                    while($row = oci_fetch_assoc($result)){
+                        echo '<tr>';
+                            echo '<td>'.$row['SZAKID'].'</td>';
+                        echo '<td>'.$row['SZNEV'].'</td>';
+                        echo '<td><a href="szakmodify.php?updateszak='.$row['SZAKID'].'">Módosítás</a></td>';
+                        echo '<td><a href="torol.php?deleteszak='.$row['SZAKID'].'">Törlés</a></td>';
+                        echo '</tr>';
+                    }
+                    echo '</table>';
+                } else{
+                    echo '<p>Még nincs megjeleníthető adat.</p>';
+                }
+            ?>
+            <br>
             <a href="kurzregist.php">📚 Kurzusok felvitele</a>
             <br>
             <?php
