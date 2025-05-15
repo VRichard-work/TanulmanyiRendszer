@@ -159,7 +159,7 @@ $conn = Connect();
                         echo '<td>'.$first['HJELSZO'].'</td>';
                         echo '<td>'.$first['SZULETES'].'</td>';
                         echo '<td>'.$first['SZAKID'].'</td>';
-                        echo '<td><a href="studmodify.php">Módosítás</a></td>';
+                        echo '<td><a href="studmodify.php?updatestud='.$first['HALLGATOID'].'">Módosítás</a></td>';
                         echo '<td><a href="torol.php?deletestud='.$first['HALLGATOID'].'">Törlés</a></td>';
                     echo '</tr>';
                     $isnul = true;
@@ -170,7 +170,7 @@ $conn = Connect();
                             echo '<td>'.$row['HJELSZO'].'</td>';
                             echo '<td>'.$row['SZULETES'].'</td>';
                             echo '<td>'.$row['SZAKID'].'</td>';
-                            echo '<td><a href="studmodify.php">Módosítás</a></td>';
+                            echo '<td><a href="studmodify.php?updatestud='.$row['HALLGATOID'].'">Módosítás</a></td>';
                             echo '<td><a href="torol.php?deletestud='.$row['HALLGATOID'].'">Törlés</a></td>';
                         echo '</tr>';
                     }
@@ -285,7 +285,7 @@ $conn = Connect();
                     echo '<tr>';
                         echo '<td>'.$first['TEREMID'].'</td>';
                         echo '<td>'.$first['FEROHELY'].'</td>';
-                        echo '<td><a href="studmodify.php">Módosítás</a></td>';
+                        echo '<td><a href="teremmodify.php?updateterem='.$first['TEREMID'].'">Módosítás</a></td>';
                         echo '<td><a href="torol.php?deleteterem='.$first['TEREMID'].'">Törlés</a></td>';
                     echo '</tr>';
                     $isnul = true;
@@ -293,7 +293,7 @@ $conn = Connect();
                         echo '<tr>';
                             echo '<td>'.$row['TEREMID'].'</td>';
                             echo '<td>'.$row['FEROHELY'].'</td>';
-                            echo '<td><a href="studmodify.php">Módosítás</a></td>';
+                            echo '<td><a href="teremmodify.php?updateterem='.$row['TEREMID'].'">Módosítás</a></td>';
                             echo '<td><a href="torol.php?deleteterem='.$row['TEREMID'].'">Törlés</a></td>';
                         echo '</tr>';
                     }
@@ -316,7 +316,7 @@ $conn = Connect();
                     echo '<tr>
                         <th>Óra azonosító</th>
                         <th>Óra Időtartama</th>
-                        <th>Terem azonosító/th>
+                        <th>Terem azonosító</th>
                         <th>Kurzus azonosító</th>
                         <th class="changes">Adatok módosítása</th>
                         <th class="changes">Óra törlése</th>

@@ -140,7 +140,7 @@ if(isset($_POST['oraid']) && isset($_POST['kezdet']) && isset($_POST['veg']) && 
                         while($rowcount = oci_fetch_array($result)){
                             $isnul = true;
                             ?> 
-                            <option value="<?php echo $rowcount['TEREMID']; if($rowcount['TEREMID'] == $row['TEREMID']){echo ' selected';}?>"><?php echo $rowcount['TEREMID']; ?></option>
+                            <option value="<?php echo $rowcount['TEREMID'];?>" <?php if($rowcount['TEREMID'] == $row['TEREMID']){echo ' selected';}?>><?php echo $rowcount['TEREMID']; ?></option>
                         <?php }
                         if(!$isnul){ ?>
                             <option value="0">Nem létezik ez a terem</option>
@@ -163,14 +163,13 @@ if(isset($_POST['oraid']) && isset($_POST['kezdet']) && isset($_POST['veg']) && 
                         while($rowcount = oci_fetch_array($result)){
                             $isnul = true;
                             ?> 
-                            <option value="<?php echo $rowcount['KURZUSID']; if($rowcount['KURZUSID'] == $row['KURZUSID']){echo ' selected';}?>"><?php echo $rowcount['KURZUSID'] . ' - ' . $rowcount['KNEV']; ?></option>
+                            <option value="<?php echo $rowcount['KURZUSID'];?>" <?php if($rowcount['KURZUSID'] == $row['KURZUSID']){echo ' selected';}?>><?php echo $rowcount['KURZUSID'] . ' - ' . $rowcount['KNEV']; ?></option>
                         <?php }
                         if(!$isnul){ ?>
                             <option value="0">Nem létezik Kurzus</option>
                         <?php }
                     }
                     ?>
-                    <option value=""></option>
                 </select>
                 
                 <?php }
