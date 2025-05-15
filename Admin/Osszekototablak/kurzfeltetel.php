@@ -1,16 +1,18 @@
 <?php
-include '../functions.php';
+include '../../functions.php';
 Session();
 Admin();
 $conn = Connect();
 
-$sql = "SELECT KURZUSOK.Knev, COUNT(FELVETTKURZUSOK.HallgatoID) AS HallgatoSzam
-FROM KURZUSOK
-LEFT JOIN FELVETTKURZUSOK ON KURZUSOK.KurzusID = FELVETTKURZUSOK.KurzusID
-GROUP BY KURZUSOK.Knev
-ORDER BY HallgatoSzam DESC";
-$result =oci_parse($conn, $sql);
-oci_execute($result);
+if(isset($_POST['nev']) && isset($_POST['felt'])){
+    $nev = $_POST['nev'];
+    $felt = $_POST['felt'];
+    $sql = "INSERT INTO FELTETELEK (KURZUSID, FELTETELKURZUSID) VALUES (:nev, :felt)";
+    $result = oci_parse($conn, $sql);
+    oci_bind_by_name($sql, ':nev', $nev);
+    oci_bind_by_name($sql, ':felt', $felt);
+    oci_execute($result);
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +20,7 @@ oci_execute($result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Kurzus feltételek</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -135,17 +137,65 @@ oci_execute($result);
 </head>
 <body>
     <div class="container">
-        <h1>Szak adatok</h1>
+        <h1>Kurzusfeltételek</h1>
+        <form action="kurzfeltetel.php" method="post">
+            <label for="nev">Kurzus neve</label>
+                <select name="nev" id="nev">
+                    <?php
+                    //kurzusid
+                    if($sql = "SELECT KURZUSID, KNEV FROM KURZUSOK"){
+                        $result = oci_parse($conn, $sql);
+                        $rowcount = oci_num_rows($result);
+                        oci_define_by_name($result, 'KURZUSID', $kurzusid);
+                        oci_define_by_name($result, 'KNEV', $kurzusnev);
+                        oci_execute($result);
+                        $isnul = false;
+                        while($rowcount = oci_fetch_array($result)){
+                            $isnul = true;
+                            ?> 
+                            <option value="<?php echo $rowcount['KURZUSID'];?>"><?php echo $rowcount['KURZUSID'] . ' - ' . $rowcount['KNEV']; ?></option>
+                        <?php }
+                        if(!$isnul){ ?>
+                            <option value="0">Nem létezik Kurzus</option>
+                        <?php }
+                    }
+                    ?>
+                </select>
+
+                <label for="felt">Új kurzus</label>
+                <select name="felt" id="felt">
+                    <?php
+                    //kurzusid
+                    if($sql = "SELECT KURZUSID, KNEV FROM KURZUSOK"){
+                        $result = oci_parse($conn, $sql);
+                        $rowcount = oci_num_rows($result);
+                        oci_define_by_name($result, 'KURZUSID', $kurzusid);
+                        oci_define_by_name($result, 'KNEV', $kurzusnev);
+                        oci_execute($result);
+                        $isnul = false;
+                        while($rowcount = oci_fetch_array($result)){
+                            $isnul = true;
+                            ?> 
+                            <option value="<?php echo $rowcount['KURZUSID'];?>"><?php echo $rowcount['KURZUSID'] . ' - ' . $rowcount['KNEV']; ?></option>
+                        <?php }
+                        if(!$isnul){ ?>
+                            <option value="0">Nem létezik Kurzus</option>
+                        <?php }
+                    }
+                    ?>
+                </select>
+                <button type="submit">Regisztráció</button>
+        </form>
         <table>
             <tr>
-                <th>Szak neve</th>
-                <th>Hallgatók száma</th>
+                <th>Kurzus</th>
+                <th>Feltétel</th>
             </tr>
             <?php
                 while (($row = oci_fetch_assoc($result)) !== false) {
                     echo "<tr>";
-                    echo "<td>{$row['KNEV']}</td>";
-                    echo "<td>{$row['HALLGATOSZAM']}</td>";
+                    echo "<td>".$row['KURZUSID']."</td>";
+                    echo "<td>".$row['FELTETELKURZUSID']."</td>";
                     echo "</tr>";
                 }
             ?>
@@ -154,6 +204,7 @@ oci_execute($result);
         oci_free_statement($result);
         oci_close($conn);
         ?>
+        <a href="../apanel.php">Vissza az admin panelra</a>
 
     </div>
 </body>
