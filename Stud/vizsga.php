@@ -9,11 +9,16 @@ if (isset($_POST['submit'])) {
     $vizsgaid = $_POST['submit'];
     $sql = "INSERT INTO VIZSGAZO (HALLGATOID, VIZSGAID) VALUES (:username, :vizsgaid)";
     $stmt = oci_parse($conn, $sql);
+    if (!$stmt) {
+        $error = oci_error($conn);
+        echo "<script>alert('Hiba történt a jelentkezés során: " . $error['message'] . "');</script>";
+    }
     oci_bind_by_name($stmt, ':username', $_SESSION['username']);
     oci_bind_by_name($stmt, ':vizsgaid', $vizsgaid);
     if (!oci_execute($stmt)) {
         $error = oci_error($stmt);
         echo "<script>alert('Hiba történt a jelentkezés során: " . $error['message'] . "');</script>";
+
     } else {
 
         echo "<script>alert('Sikeres jelentkezés!');</script>";
