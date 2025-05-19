@@ -3,15 +3,15 @@ include '../functions.php';
 Session();
 Admin();
 $conn = Connect();
-if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] != null && $_POST['password'] != null && $_POST['szulet'] != null) {
+if (isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] != null && $_POST['password'] != null && $_POST['szulet'] != null) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $szulet = $_POST['szulet'];
     $szakid = $_POST['szakid'] ?? null; // Ha nem küldtek szakid-t, akkor null-ra állítjuk
     $id = 0;
-    while(true){
+    while (true) {
         $sql = "SELECT * FROM HALLGATOK WHERE HALLGATOID = :id";
-        $id = rand(1, 999);
+        $id = rand(1, 9999);
         $stmt = oci_parse($conn, $sql);
         oci_bind_by_name($stmt, ':id', $id);
         oci_execute($stmt);
@@ -19,30 +19,31 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
             break;
         }
     }
-    
+
     oci_free_statement($stmt);
     $sql = "INSERT INTO HALLGATOK (HALLGATOID,HNEV,HJELSZO,SZULETES, SZAKID) VALUES (:id, :username, :password, TO_DATE(:szulet, 'YYYY-MM-DD'), :szakid)";
-    
+
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':id', $id);
     oci_bind_by_name($stmt, ':username', $username);
     oci_bind_by_name($stmt, ':password', $password);
     oci_bind_by_name($stmt, ':szulet', $szulet);
     oci_bind_by_name($stmt, ':szakid', $szakid);
-    if(oci_execute($stmt)) {
+    if (oci_execute($stmt)) {
         echo "Sikeres regisztráció!";
         header("Location: apanel.php");
     } else {
         echo "Hiba történt a regisztráció során.";
     }
     oci_free_statement($stmt);
-    
+
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,6 +59,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
             align-items: center;
             height: 100vh;
         }
+
         .container {
             background: #fff;
             padding: 20px;
@@ -66,26 +68,33 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
             width: 100%;
             max-width: 400px;
         }
+
         h1 {
             text-align: center;
             color: #3b3b3b;
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
+
         label {
             margin-top: 10px;
             font-weight: bold;
         }
-        input, select, button {
+
+        input,
+        select,
+        button {
             margin-top: 5px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
         }
-        #department{
+
+        #department {
             margin-bottom: 50px;
         }
 
@@ -97,6 +106,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
             padding: 0.8rem;
             margin-top: 20px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
@@ -111,12 +121,14 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
             padding: 0.8rem;
             border-radius: 5px;
         }
+
         a:hover {
             background-color: #02132c;
             color: white;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
 
@@ -136,28 +148,30 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_POST['username'] 
             <select id="department" name="szakid" required>
                 <?php
                 //szakid választása a kurzusukhoz
-                if($sql = "SELECT SZAKID, SZNEV FROM SZAKOK"){
+                if ($sql = "SELECT SZAKID, SZNEV FROM SZAKOK") {
                     $result = oci_parse($conn, $sql);
                     $rowcount = oci_num_rows($result);
                     oci_define_by_name($result, 'SZAKID', $szakid);
                     oci_define_by_name($result, 'SZNEV', $szaknev);
                     oci_execute($result);
                     $isnul = false;
-                    while($rowcount = oci_fetch_array($result)){
+                    while ($rowcount = oci_fetch_array($result)) {
                         $isnul = true;
-                        ?> 
-                        <option value="<?php echo $rowcount['SZAKID']; ?>"><?php echo $rowcount['SZAKID'] . ' - ' . $rowcount['SZNEV']; ?></option>
+                        ?>
+                        <option value="<?php echo $rowcount['SZAKID']; ?>">
+                            <?php echo $rowcount['SZAKID'] . ' - ' . $rowcount['SZNEV']; ?></option>
                     <?php }
-                    if(!$isnul){ ?>
+                    if (!$isnul) { ?>
                         <option value="0">Nem létezik Kurzus</option>
                     <?php }
                 }
                 ?>
             </select>
-            
+
             <button type="submit">Regisztráció</button>
             <a href="apanel.php">Vissza a főpanelre</a>
         </form>
     </div>
 </body>
+
 </html>
