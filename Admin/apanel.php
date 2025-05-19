@@ -122,11 +122,51 @@ $conn = Connect();
     form button[type="submit"]:hover {
     background-color: #c0392b;
     }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #005796;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #003f74;
+}
+
+body {
+    padding-top: 60px; /* hogy ne takarja el a fix navbar a tartalmat */
+}
+
+
 </style>
 
 </head>
 <body>
-
+<nav class="navbar">
+    <a href="#hallgatok">🎓 Hallgatók</a>
+    <a href="#oktatok">👩‍🏫 Oktatók</a>
+    <a href="#szakok">📘 Szakok</a>
+    <a href="#kurzusok">📚 Kurzusok</a>
+    <a href="#termek">🏫 Termek</a>
+    <a href="#orak">⏰ Órák</a>
+</nav>
 <div class="container">
     <h1>Admin Panel</h1>
     <!--adminok hozzáadása-->
@@ -146,7 +186,7 @@ $conn = Connect();
     <a href="Osszekototablak/osszkotlista.php">Összekötő táblák</a>
     <br><br><br><br>
     <div class="panel">
-        <a href="studreg.php">👨‍🎓 Diákok felvitele</a>
+        <a href="studreg.php" id="hallgatok">👨‍🎓 Diákok felvitele</a>
         <br>
         <?php
             $sql = "SELECT * FROM HALLGATOK";
@@ -192,7 +232,7 @@ $conn = Connect();
                 }
             ?>
             <br>
-            <a href="oktregis.php">👩‍🏫 Tanárok felvitele</a>
+            <a href="oktregis.php" id="oktatok">👩‍🏫 Tanárok felvitele</a>
             <br>
             <?php
             $sql = "SELECT * FROM OKTATOK";
@@ -232,7 +272,7 @@ $conn = Connect();
                 }
             ?>
             <br>
-            <a href="szakregist.php">Szak felvitele</a>
+            <a href="szakregist.php" id="szakok">📘 Szak felvitele</a>
             <br>
             <?php
             $sql = "SELECT * FROM SZAKOK";
@@ -269,7 +309,7 @@ $conn = Connect();
                 }
             ?>
             <br>
-            <a href="kurzregist.php">📚 Kurzusok felvitele</a>
+            <a href="kurzregist.php" id="kurzusok">📚 Kurzusok felvitele</a>
             <br>
             <?php
             $sql = "SELECT * FROM KURZUSOK";
@@ -315,7 +355,7 @@ $conn = Connect();
                 }
             ?>
             <br>
-            <a href="teremregist.php">💼 Terem felvitele</a>
+            <a href="teremregist.php" id="termek">💼 Terem felvitele</a>
             <br>
             <?php
             $sql = "SELECT * FROM TERMEK";
@@ -352,7 +392,7 @@ $conn = Connect();
                 }
             ?>
             <br>
-            <a href="oraregist.php">📖 Óra felvitele</a>
+            <a href="oraregist.php" id="orak">📖 Óra felvitele</a>
             <br>
             <?php
             $sql = "SELECT * FROM ORAK";
