@@ -172,11 +172,16 @@ body {
     <!--adminok hozzáadása-->
     <br><br>
     <a href="../index.php">Adminok kezelése</a>
+    <br> <hr>
+    <h2>Lekérdezések</h2>
     <a href="Lekerdezesek/szakadatok.php">Szak adatok</a>
-    <a href="Lekerdezesek/vizsszam.php">Vizsgaszámok</a>
-    <a href="Lekerdezesek/vizsgaossz.php">Vizsga összesítés</a>
+    <a href="Lekerdezesek/vizsszam.php">Vizsgaszámok termek szerint</a>
+    <a href="Lekerdezesek/vizsgaossz.php">4-es feletti kurzus átlagok</a>
     <a href="Lekerdezesek/novizsga.php">Nem jelentkezett vizsgára</a>
-    <br><br><br><br>
+    <a href="Lekerdezesek/oktvizsga.php">Vizsgaszámok oktatók szeint</a>
+    <a href="Lekerdezesek/elsovizsga.php">Első vizsga kurzusuonként</a>
+    <a href=""></a>
+    <br><br><hr><br><br>
     <a href="Osszekototablak/osszkotlista.php">Összekötő táblák</a>
     <br><br><br><br>
     <div class="panel">

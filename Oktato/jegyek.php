@@ -8,26 +8,22 @@ if (isset($_POST['hallgatoid'])) {
     $hallgatoid = $_POST['hallgatoid'];
     $kurzusid = $_POST['kurzusnev'];
     $jegy = $_POST['jegy'];
+    $felev = $_POST['felev'];
+
 
     //ellenőrzés
     if ($hallgatoid == 0) {
         echo "Nincs ilyen hallgató";
         $_POST['hallgatoid'] = null;
     }
-    $sql = "SELECT * FROM FELVETTKURZUSOK 
-    WHERE HALLGATOID = :hallgatoid AND KURZUSID = :kurzusid";
-    $stmt = oci_parse($conn, $sql);
-    oci_bind_by_name($stmt, ':hallgatoid', $hallgatoid);
-    oci_bind_by_name($stmt, ':kurzusid', $kurzusid);
-    oci_execute($stmt);
 
-    $felvetel = oci_fetch($stmt);
     $sql = "UPDATE FELVETTKURZUSOK SET ERDEMJEGY = :jegy  
-    WHERE HALLGATOID = :hallgatoid AND KURZUSID = :kurzusid";
+    WHERE HALLGATOID = :hallgatoid AND KURZUSID = :kurzusid AND FELEVDATUM2 = TO_DATE(:felev, 'YYYY-MM-DD')";
     $stmt = oci_parse($conn, $sql);
     oci_bind_by_name($stmt, ':hallgatoid', $hallgatoid);
     oci_bind_by_name($stmt, ':kurzusid', $kurzusid);
     oci_bind_by_name($stmt, ':jegy', $jegy);
+    oci_bind_by_name($stmt, ':felev', $felev);
 
 
 
@@ -186,6 +182,9 @@ button:hover {
 
             <label for="jegy">Jegy:</label>
             <input type="number" id="jegy" name="jegy" required>
+
+            <label for="felev">Félév:</label>
+            <input type="date" id="felev" name="felev" required>
 
             <label for="button">Kiválaszt</label>
             <button type="submit" name="kurzusnev" value="<?php echo $kurzusid; ?>">Kiválaszt</button>
