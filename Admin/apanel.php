@@ -140,7 +140,8 @@ $conn = Connect();
     <a href="Lekerdezesek/novizsga.php">Nem jelentkezett vizsgára</a>
     <a href="Lekerdezesek/oktvizsga.php">Vizsgaszámok oktatók szeint</a>
     <a href="Lekerdezesek/elsovizsga.php">Első vizsga kurzusuonként</a>
-    <a href=""></a>
+    <a href="Lekerdezesek/vizsgjel.php">Vizsgánkénti jelentkezők száma és termek</a>
+    <a href="Lekerdezesek/egykurz.php">Egy kurzust felvett hallgatók</a>
     <br><br><hr><br><br>
     <a href="Osszekototablak/osszkotlista.php">Összekötő táblák</a>
     <br><br><br><br>
