@@ -137,8 +137,7 @@ $conn = Connect();
     <a href="Lekerdezesek/vizsgaossz.php">Vizsga összesítés</a>
     <a href="Lekerdezesek/novizsga.php">Nem jelentkezett vizsgára</a>
     <br><br><br><br>
-    <a href="Osszekototablak/kurzfeltetel.php">Kurzusfeltételek</a>
-    <a href="Osszekototablak/kurztartozik.php">Kurzusok szakja</a>
+    <a href="Osszekototablak/osszkotlista.php">Összekötő táblák</a>
     <br><br><br><br>
     <div class="panel">
         <a href="studreg.php">👨‍🎓 Diákok felvitele</a>

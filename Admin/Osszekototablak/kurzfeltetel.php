@@ -4,14 +4,33 @@ Session();
 Admin();
 $conn = Connect();
 
-if(isset($_POST['nev']) && isset($_POST['felt'])){
-    $nev = $_POST['nev'];
-    $felt = $_POST['felt'];
-    $sql = "INSERT INTO FELTETELEK (KURZUSID, FELTETELKURZUSID) VALUES (:nev, :felt)";
+if(isset($_POST['feltid']) && isset($_POST['kurzid'])){
+    $feltid = $_POST['feltid'];
+    $kurzid = $_POST['kurzid'];
+    $sql = "INSERT INTO FELTETELEK (KURZUSID, FELTETELKURZUSID) VALUES (:kurzid, :feltid)";
     $result = oci_parse($conn, $sql);
-    oci_bind_by_name($sql, ':nev', $nev);
-    oci_bind_by_name($sql, ':felt', $felt);
-    oci_execute($result);
+    if (!$result){
+        echo 'Nem olvasta be az adatot';
+    }
+    if (!$result) {
+        $e = oci_error($conn);
+        echo "Hiba a lekérdezés előkészítésekor: " . $e['message'];
+    } else {
+        oci_bind_by_name($result, ':feltid', $feltid);
+        oci_bind_by_name($result, ':kurzid', $kurzid);
+
+        if (!oci_execute($result)) {
+            $e = oci_error($result);
+            echo "Hiba a végrehajtás során: " . $e['message'];
+        } else {
+            oci_commit($conn);
+            echo "Sikeres beszúrás!";
+            header('Location: osszkotlista.php');
+        }
+
+        oci_free_statement($result);
+    }
+    
 }
 ?>
 
@@ -137,23 +156,24 @@ if(isset($_POST['nev']) && isset($_POST['felt'])){
 </head>
 <body>
     <div class="container">
-        <h1>Kurzusfeltételek</h1>
+        <h1>Szakhoz tartozó kurzusok</h1>
         <form action="kurzfeltetel.php" method="post">
-            <label for="nev">Kurzus neve</label>
-                <select name="nev" id="nev">
+                
+                <label for="kurzid">Új kurzus</label>
+                <select name="kurzid" id="kurzid">
                     <?php
                     //kurzusid
                     if($sql = "SELECT KURZUSID, KNEV FROM KURZUSOK"){
                         $result = oci_parse($conn, $sql);
                         $rowcount = oci_num_rows($result);
-                        oci_define_by_name($result, 'KURZUSID', $kurzusid);
-                        oci_define_by_name($result, 'KNEV', $kurzusnev);
+                        oci_define_by_name($result, 'KURZUSID', $db_kurzusid);
+                        oci_define_by_name($result, 'KNEV', $db_kurzusnev);
                         oci_execute($result);
                         $isnul = false;
                         while($rowcount = oci_fetch_array($result)){
                             $isnul = true;
                             ?> 
-                            <option value="<?php echo $rowcount['KURZUSID'];?>"><?php echo $rowcount['KURZUSID'] . ' - ' . $rowcount['KNEV']; ?></option>
+                            <option value="<?php echo $db_kurzusid;?>"><?php echo $db_kurzusid . ' - ' . $db_kurzusnev; ?></option>
                         <?php }
                         if(!$isnul){ ?>
                             <option value="0">Nem létezik Kurzus</option>
@@ -161,22 +181,22 @@ if(isset($_POST['nev']) && isset($_POST['felt'])){
                     }
                     ?>
                 </select>
-
-                <label for="felt">Új kurzus</label>
-                <select name="felt" id="felt">
+            
+                <label for="feltid">Feltétek kurzus</label>
+                <select id="feltid" name="feltid" required>
                     <?php
-                    //kurzusid
+                    //feltetel id
                     if($sql = "SELECT KURZUSID, KNEV FROM KURZUSOK"){
                         $result = oci_parse($conn, $sql);
                         $rowcount = oci_num_rows($result);
-                        oci_define_by_name($result, 'KURZUSID', $kurzusid);
-                        oci_define_by_name($result, 'KNEV', $kurzusnev);
+                        oci_define_by_name($result, 'KURZUSID', $db_feltid);
+                        oci_define_by_name($result, 'KNEV', $db_feltnev);
                         oci_execute($result);
                         $isnul = false;
                         while($rowcount = oci_fetch_array($result)){
                             $isnul = true;
                             ?> 
-                            <option value="<?php echo $rowcount['KURZUSID'];?>"><?php echo $rowcount['KURZUSID'] . ' - ' . $rowcount['KNEV']; ?></option>
+                            <option value="<?php echo $db_feltid; ?>"><?php echo $db_feltid . ' - ' . $db_feltnev; ?></option>
                         <?php }
                         if(!$isnul){ ?>
                             <option value="0">Nem létezik Kurzus</option>
@@ -184,27 +204,10 @@ if(isset($_POST['nev']) && isset($_POST['felt'])){
                     }
                     ?>
                 </select>
+                
                 <button type="submit">Regisztráció</button>
         </form>
-        <table>
-            <tr>
-                <th>Kurzus</th>
-                <th>Feltétel</th>
-            </tr>
-            <?php
-                while (($row = oci_fetch_assoc($result)) !== false) {
-                    echo "<tr>";
-                    echo "<td>".$row['KURZUSID']."</td>";
-                    echo "<td>".$row['FELTETELKURZUSID']."</td>";
-                    echo "</tr>";
-                }
-            ?>
-        </table>
-        <?php
-        oci_free_statement($result);
-        oci_close($conn);
-        ?>
-        <a href="../apanel.php">Vissza az admin panelra</a>
+        <a href="osszkotlista.php">Vissza az előző oldalra</a>
 
     </div>
 </body>
