@@ -123,36 +123,36 @@ $conn = Connect();
     background-color: #c0392b;
     }
 
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #005796;
-    padding: 10px 0;
-    margin-bottom: 20px;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #005796;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 
-.navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 8px 15px;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
 
-.navbar a:hover {
-    background-color: #003f74;
-}
+    .navbar a:hover {
+        background-color: #003f74;
+    }
 
-body {
-    padding-top: 60px; /* hogy ne takarja el a fix navbar a tartalmat */
-}
+    body {
+        padding-top: 60px; /* hogy ne takarja el a fix navbar a tartalmat */
+    }
 
 
 </style>

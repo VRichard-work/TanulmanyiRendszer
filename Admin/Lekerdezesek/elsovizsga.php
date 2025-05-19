@@ -138,14 +138,16 @@ oci_execute($result);
         <h1>Vizsga számok termek szerint</h1>
         <table>
             <tr>
-                <th>Oktató neve</th>
+                <th>Kurzus neve</th>
                 <th>Vizsgák száma</th>
+                <th>Legelső vizsga időpontja</th>
             </tr>
             <?php
                 while (($row = oci_fetch_assoc($result)) !== false) {
                     echo "<tr>";
-                    echo "<td>{$row['ONEV']}</td>";
-                    echo "<td>{$row['VIZSGASZAM']}</td>";
+                    echo "<td>{$row['KNEV']}</td>";
+                    echo "<td>{$row['VIZSGAKSZAMA']}</td>";
+                    echo "<td>" . date('Y.m.d H:i', strtotime($row['LEGELSOVIZSGA'])) . "</td>";
                     echo "</tr>";
                 }
             ?>
