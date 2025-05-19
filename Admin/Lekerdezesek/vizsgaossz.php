@@ -4,12 +4,12 @@ Session();
 Admin();
 $conn = Connect();
 
-$sql = "SELECT OKTATOK.Onev, KURZUSOK.Knev, VIZSGAK.Vkezdet, VIZSGAK.Vvege
-FROM OKTATOK
-JOIN FELELOS ON OKTATOK.OktatoID = FELELOS.OktatoID
-JOIN KURZUSOK ON FELELOS.KurzusID = KURZUSOK.KurzusID
-JOIN VIZSGAK ON KURZUSOK.KurzusID = VIZSGAK.KurzusID
-ORDER BY OKTATOK.Onev, VIZSGAK.Vkezdet";
+$sql = "SELECT KURZUSOK.KNEV, AVG(FELVETTKURZUSOK.ERDEMJEGY) AS AtlagJegy
+FROM KURZUSOK
+JOIN FELVETTKURZUSOK ON KURZUSOK.KURZUSID = FELVETTKURZUSOK.KURZUSID
+WHERE FELVETTKURZUSOK.ERDEMJEGY IS NOT NULL
+GROUP BY KURZUSOK.KNEV
+HAVING AVG(FELVETTKURZUSOK.ERDEMJEGY) >= 4";
 $result =oci_parse($conn, $sql);
 oci_execute($result);
 ?>
@@ -140,16 +140,15 @@ oci_execute($result);
         <h1>Vizsga számok termek szerint</h1>
         <table>
             <tr>
-                <th>Oktató</th>
                 <th>Kurzus</th>
-                <th>Viizsga időpontja</th>
+                <th>Átlag</th>
             </tr>
             <?php
                 while (($row = oci_fetch_assoc($result)) !== false) {
                     echo "<tr>";
-                    echo "<td>{$row['ONEV']}</td>";
                     echo "<td>{$row['KNEV']}</td>";
-                    echo "<td>".$row['VKEZDET']." - ".$row['VVEGE']."</td>";
+                    $atlag = str_replace(',', '.', $row['ATLAGJEGY']); // vesszőt cserélj pontra
+                    echo "<td>" . number_format((float)$atlag, 2) . "</td>";
                     echo "</tr>";
                 }
             ?>
