@@ -7,6 +7,7 @@ $conn = Connect();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,26 +32,33 @@ $conn = Connect();
             width: 100%;
             max-width: 400px;
         }
+
         h1 {
             text-align: center;
             color: #3b3b3b;
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
+
         label {
             margin-top: 10px;
             font-weight: bold;
         }
-        input, select, button {
+
+        input,
+        select,
+        button {
             margin-top: 5px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
         }
-        #department{
+
+        #department {
             margin-bottom: 50px;
         }
 
@@ -62,6 +70,7 @@ $conn = Connect();
             padding: 0.8rem;
             margin-top: 20px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
@@ -76,6 +85,7 @@ $conn = Connect();
             padding: 0.8rem;
             border-radius: 5px;
         }
+
         a:hover {
             background-color: #02132c;
             color: white;
@@ -83,12 +93,13 @@ $conn = Connect();
     </style>
 
 </head>
+
 <body>
     <div class="container">
         <h1>Diák Panel</h1>
         <div class="panel">
             <a href="apply.php">Kurzus / Óra jelentkezés</a>
-            <a href="spect.php">Felvett órák / kurzusok</a>
+            <a href="spect.php">Felvett kurzusok</a>
             <a href="vizsga.php">Vizsgajelentkezés</a>
             <form action="../logout.php" method="POST">
                 <button type="submit">Kijelentkezés</button>
@@ -96,4 +107,5 @@ $conn = Connect();
         </div>
     </div>
 </body>
+
 </html>
