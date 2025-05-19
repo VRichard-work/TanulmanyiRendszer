@@ -138,7 +138,7 @@ $conn = Connect();
         oci_execute($stmt);
         $row = oci_fetch_array($stmt);
         if ($row['ATLAG'] !== null) {
-            echo "<p>" . $row['ATLAG'] . "</p>";
+            echo "<p>" . round($row['ATLAG'], 2) . "</p>";
         } else {
             echo "<p>Nincs még érdemjegy</p>";
         }
