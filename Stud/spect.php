@@ -130,9 +130,8 @@ $conn = Connect();
     <div>
         <strong>Átlagod</strong>
         <?php
-        $sql = "SELECT AVG(ERDEMJEGY) AS ATLAG
-                FROM FELVETTKURZUSOK
-                WHERE HALLGATOID = :hallgatoid";
+        $sql = "SELECT hatlag( :hallgatoid) AS ATLAG
+                FROM DUAL";
         $stmt = oci_parse($conn, $sql);
         oci_bind_by_name($stmt, ':hallgatoid', $hallgatoid);
         oci_execute($stmt);
