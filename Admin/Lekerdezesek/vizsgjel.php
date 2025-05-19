@@ -4,10 +4,11 @@ Session();
 Admin();
 $conn = Connect();
 
-$sql = "SELECT OKTATOK.ONEV, COUNT(VIZSGAK.VIZSGAID) AS VIZSGASzam
-FROM OKTATOK
-LEFT JOIN VIZSGAK ON OKTATOK.OKTATOID = VIZSGAK.OKTATOID
-GROUP BY OKTATOK.ONEV";
+$sql = "SELECT VIZSGAK.VIZSGAID, TERMEK.TEREMID, COUNT(VIZSGAZO.HALLGATOID) AS JELENTKEZOKSZAMA
+FROM VIZSGAK
+JOIN TERMEK ON VIZSGAK.TEREMID = TERMEK.TEREMID
+LEFT JOIN VIZSGAZO ON VIZSGAK.VIZSGAID = VIZSGAZO.VIZSGAID
+GROUP BY VIZSGAK.VIZSGAID, TERMEK.TEREMID";
 $result =oci_parse($conn, $sql);
 oci_execute($result);
 ?>
@@ -138,14 +139,16 @@ oci_execute($result);
         <h1>Vizsga számok termek szerint</h1>
         <table>
             <tr>
-                <th>Oktató neve</th>
+                <th>Kurzus neve</th>
                 <th>Vizsgák száma</th>
+                <th>Legelső vizsga időpontja</th>
             </tr>
             <?php
                 while (($row = oci_fetch_assoc($result)) !== false) {
                     echo "<tr>";
-                    echo "<td>{$row['ONEV']}</td>";
-                    echo "<td>{$row['VIZSGASZAM']}</td>";
+                    echo "<td>{$row['VIZSGAID']}</td>";
+                    echo "<td>{$row['TEREMID']}</td>";
+                    echo "<td>{$row['JELENTKEZOKSZAMA']}</td>";
                     echo "</tr>";
                 }
             ?>
