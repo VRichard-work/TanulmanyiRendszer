@@ -145,16 +145,31 @@ $conn = Connect();
                     echo '<tr>
                         <th>Szak</th>
                         <th>Kurzus</th>
+                        <th>Törlés</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['SZAKID'].'</td>';
                         echo '<td>'.$first['KURZUSID'].'</td>';
+                        echo "<td>
+                                <form method='post' action='./torol1.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $first['SZAKID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $first['KURZUSID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>";
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
                         echo '<tr>';
                             echo '<td>'.$row['SZAKID'].'</td>';
                             echo '<td>'.$row['KURZUSID'].'</td>';
+                            echo "<td>
+                                <form method='post' action='./torol1.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $row['SZAKID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $row['KURZUSID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>";
                         echo '</tr>';
                     }
                     echo '</table>';
@@ -180,16 +195,31 @@ $conn = Connect();
                     echo '<tr>
                         <th>Kurzus</th>
                         <th>Tanár</th>
+                        <th>Törlés</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['KURZUSID'].'</td>';
                         echo '<td>'.$first['OKTATOID'].'</td>';
+                        echo "<td>
+                                <form method='post' action='./torol2.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $first['KURZUSID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $first['OKTATOID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>";                        
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
                         echo '<tr>';
                             echo '<td>'.$row['KURZUSID'].'</td>';
                             echo '<td>'.$row['OKTATOID'].'</td>';
+                            echo "<td>
+                                <form method='post' action='./torol2.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $row['KURZUSID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $row['OKTATOID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>"; 
                         echo '</tr>';
                     }
                     echo '</table>';
@@ -215,16 +245,30 @@ $conn = Connect();
                     echo '<tr>
                         <th>Tanár</th>
                         <th>Kurzus</th>
+                        <th>Töröl</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['OKTATOID'].'</td>';
                         echo '<td>'.$first['ORAID'].'</td>';
+                        echo "<td>
+                                <form method='post' action='./torol3.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $first['OKTATOID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $first['ORAID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>"; 
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
                         echo '<tr>';
                             echo '<td>'.$row['OKTATOID'].'</td>';
-                            echo '<td>'.$row['ORAID'].'</td>';
+                            echo '<td>'.$row['ORAID'].'</td>';echo "<td>
+                                <form method='post' action='./torol3.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $row['OKTATOID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $row['ORAID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>"; 
                         echo '</tr>';
                     }
                     echo '</table>';
@@ -250,16 +294,31 @@ $conn = Connect();
                     echo '<tr>
                         <th>Kurzus</th>
                         <th>Feltétel</th>
+                        <th>Töröl</th>
                         </tr>';
                     echo '<tr>';
                         echo '<td>'.$first['KURZUSID'].'</td>';
                         echo '<td>'.$first['FELTETELKURZUSID'].'</td>';
+                        echo "<td>
+                                <form method='post' action='./torol4.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $first['KURZUSID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $first['FELTETELKURZUSID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>"; 
                     echo '</tr>';
                     $isnul = true;
                     while($row = oci_fetch_assoc($result)){
                         echo '<tr>';
                             echo '<td>'.$row['KURZUSID'].'</td>';
                             echo '<td>'.$row['FELTETELKURZUSID'].'</td>';
+                            echo "<td>
+                                <form method='post' action='./torol4.php' onsubmit='return confirm(\"Biztosan törlöd ezt a kapcsolatot?\");'>
+                                    <input type='hidden' name='szakid' value='" . $row['KURZUSID'] . "'>
+                                    <input type='hidden' name='kurzusid' value='" . $row['FELTETELKURZUSID'] . "'>
+                                    <button type='submit'>Törlés</button>
+                                </form>
+                            </td>"; 
                         echo '</tr>';
                     }
                     echo '</table>';

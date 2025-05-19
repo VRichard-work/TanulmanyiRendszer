@@ -182,7 +182,7 @@ if(isset($_POST['szakid']) && isset($_POST['kurzid'])){
                     ?>
                 </select>
 
-                <label for="kurzid">Új kurzus</label>
+                <label for="kurzid">Kurzus azonosító</label>
                 <select name="kurzid" id="kurzid">
                     <?php
                     //kurzusid
